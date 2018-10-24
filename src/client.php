@@ -6,18 +6,21 @@
     <title>SCU Bug Tracker</title>
 </head>
 <body>
+    <?php
+    ?>
+
     <h2>Welcome to the</h2>
     <h1>SCU Bug Tracker</h1>
 
     <hr />
     <p>Please use the form below to report a bug with SCU services.</p>
 
-    <form action="">
-        <input type="text" name="name" placeholder="Please enter your name">
+    <form action="welcome_get.php" method="get">
+        Name: <input type="text" name="name">
         <br />
-        <input type="text" name="email" placeholder="Please enter your email">
+        Email: <input type="text" name="email">
         <br />
-        <input type="text" name="description" placeholder="Tell us what happened">
+        Description: <input type="text" name="description">
         <br />
 
         <input type="submit" value="Submit">
