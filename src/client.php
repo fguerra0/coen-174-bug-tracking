@@ -7,11 +7,14 @@
 </head>
 <body>
     <?php
-	
 
+    include 'db.php';
 
+    $stid = oci_parse($conn, 'SELECT * FROM Bugs');
+    oci_execute($stid);
 
-
+    $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+    echo $row;
 
     ?>
 
