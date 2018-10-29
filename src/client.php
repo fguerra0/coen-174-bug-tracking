@@ -16,13 +16,13 @@
     <p>Please use the form below to report a bug with SCU services.</p>
 
     <form action="welcome_get.php" method="get">
-        Name: <input type="text" name="name">
+        LastName: <input type="text" name="name" required>
+        FirstName: <input type="text" name="name" required>
         <br />
-        Email: <input type="text" name="email">
+        Email: <input type="text" name="email" required>
         <br />
-        Description: <input type="text" name="description">
+        Description: <input type="text" name="description" required>
         <br />
-
         <input type="submit" value="Submit">
     </form>
 </body>
