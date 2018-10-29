@@ -24,9 +24,9 @@
     <hr />
     <p>Please use the form below to report a bug with SCU services.</p>
 
-    <form action="welcome_get.php" method="get">
-        Last Name: <input type="text" name="name" required>
-        First Name: <input type="text" name="name" required>
+    <form action="welcome_get.php" method="post">
+        Last Name: <input type="text" name="lastName" required>
+        First Name: <input type="text" name="firstName" required>
         <br />
         Email: <input type="text" name="email" required>
         <br />

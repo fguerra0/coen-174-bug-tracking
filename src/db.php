@@ -24,8 +24,6 @@ function db_close($conn) {
 }
 
 function print_rows($conn, $table) {
-	print "SELECT * FROM $table";
-
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
@@ -37,6 +35,11 @@ function print_rows($conn, $table) {
 		}
 		print '</p>';
     }
+}
+
+function insert_row($conn, $query) {
+	$stid = oci_parse($conn, $query);
+	oci_execute($stid);
 }
 
 ?>
