@@ -4,10 +4,20 @@
     Welcome
     <?php
 
-    echo $_POST['lastName'];
-    echo $_POST['firstName'];
-    echo $_POST['email'];
-    echo $_POST['description'];
+    include 'db.php';
+
+    $lastname = $_POST['lastName'];
+    $firstname = $_POST['firstName'];
+    $email = $_POST['email'];
+    $description = $_POST['description'];
+
+    $conn = db_connect();
+
+    $query = "INSERT INTO Bugs
+              VALUES (1, $lastname, $firstname, $email, $description);";
+    insert_row($conn, $query);
+
+    db_close($conn);
 
     ?>
     <br />
