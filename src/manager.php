@@ -22,10 +22,30 @@
         </p>
     </div>
     <div>
-        <p>[List of testers]</p>
+        <p>
+            <?php
+                include 'db.php';
+
+                $conn = db_connect();
+
+                print_rows($conn, 'Testers');
+
+                db_close($conn);
+            ?>
+        </p>
     </div>
     <div>
-        <p>[List of developers]</p>
+        <p>
+            <?php
+                include 'db.php';
+
+                $conn = db_connect();
+
+                print_rows($conn, 'Devs');
+
+                db_close($conn);
+            ?>
+        </p>
     </div>
 </body>
 </html>

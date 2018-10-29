@@ -9,7 +9,17 @@
     <h1>Welcome, Tester!</h1>
     <hr />
     <div>
-        <p>[List of bugs goes here]</p>
+        <p>
+            <?php
+                include 'db.php';
+
+                $conn = db_connect();
+
+                print_rows($conn, 'Bugs');
+
+                db_close($conn);
+            ?>
+        </p>
     </div>
     <form action="">
         <input type="text" name="testtype" placeholder="What kind of test was completed">
