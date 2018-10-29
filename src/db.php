@@ -24,9 +24,9 @@ function db_close($conn) {
 }
 
 function print_rows($conn, $table) {
-	print 'SELECT * FROM {$table}';
+	print "SELECT * FROM $table";
 
-	$stid = oci_parse($conn, 'SELECT * FROM {$table}');
+	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
