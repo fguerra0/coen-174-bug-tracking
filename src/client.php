@@ -7,6 +7,12 @@
 </head>
 <body>
     <?php
+	
+
+
+
+
+
     ?>
 
     <h2>Welcome to the</h2>
