@@ -14,7 +14,7 @@
     $conn = db_connect();
 
     $query = "INSERT INTO Bugs
-              VALUES (1, $lastname, $firstname, $email, $description)";
+              VALUES (1, '$lastname', '$firstname', '$email', '$description')";
     print $query;
 
     insert_row($conn, $query);
