@@ -13,8 +13,12 @@
     $stid = oci_parse($conn, 'SELECT * FROM Bugs');
     oci_execute($stid);
 
-    $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
-    echo $row;
+    while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        print '<br />';
+        foreach ($row as $item) {
+            print '<p>'.($item?htmlentities($item):' ').'</p>';
+        }
+    }
 
     ?>
 
@@ -25,8 +29,8 @@
     <p>Please use the form below to report a bug with SCU services.</p>
 
     <form action="welcome_get.php" method="get">
-        LastName: <input type="text" name="name" required>
-        FirstName: <input type="text" name="name" required>
+        Last Name: <input type="text" name="name" required>
+        First Name: <input type="text" name="name" required>
         <br />
         Email: <input type="text" name="email" required>
         <br />
