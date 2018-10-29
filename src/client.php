@@ -10,15 +10,12 @@
 
     include 'db.php';
 
-    $stid = oci_parse($conn, 'SELECT * FROM Bugs');
-    oci_execute($stid);
+    $conn = db_connect();
 
-    while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-        print '<br />';
-        foreach ($row as $item) {
-            print '<p>'.($item?htmlentities($item):' ').'</p>';
-        }
-    }
+    $stid = get_rows($conn, 'Bugs');
+    print_rows($stid);
+
+    db_close($conn);
 
     ?>
 
