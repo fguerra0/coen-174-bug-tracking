@@ -4,18 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCU Bug Tracker</title>
+    <?php
+        include 'db.php';
+    ?>
 </head>
 <body>
     <?php
-
-    include 'db.php';
-
-    $conn = db_connect();
-
-    print_rows($conn, 'Bugs');
-
-    db_close($conn);
-
+        $conn = db_connect();
+        print_rows($conn, 'Bugs');
+        db_close($conn);
     ?>
 
     <h2>Welcome to the</h2>
