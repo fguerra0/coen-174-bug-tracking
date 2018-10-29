@@ -1,8 +1,8 @@
 <?php
 
-include 'credentials.php';
-
 function db_connect() {
+	include 'credentials.php';
+
 	$conn = oci_connect($username, $password, $dbserver);
 
 	if ($conn)
@@ -23,14 +23,12 @@ function db_close($conn) {
 	oci_close($conn);
 }
 
-function get_rows($conn, $table) {
+function print_rows($conn, $table) {
+	print 'SELECT * FROM {$table}';
+
 	$stid = oci_parse($conn, 'SELECT * FROM {$table}');
-    oci_execute($stid);
+	oci_execute($stid);
 
-	return $stid;
-}
-
-function print_rows($stid) {
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 		print '<br />';
 		print '<p>';

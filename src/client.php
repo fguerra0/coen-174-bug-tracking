@@ -12,8 +12,7 @@
 
     $conn = db_connect();
 
-    $stid = get_rows($conn, 'Bugs');
-    print_rows($stid);
+    print_rows($conn, 'Bugs');
 
     db_close($conn);
 
