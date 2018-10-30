@@ -38,5 +38,15 @@
             ?>
         </p>
     </div>
+    <div>
+    <p>Use the form below to assign a bug to a developer:</p>
+
+    <form action="assign_developer.php" method="post">
+        Developer ID: <input type="text" name="developerID" required>
+        Bug ID: <input type="text" name="bugID" required>
+        <br />
+        <input type="submit" value="Submit">
+    </form>
+    </div>
 </body>
 </html>
