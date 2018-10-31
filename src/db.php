@@ -27,36 +27,38 @@ function print_rows($conn, $table) {
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
+	print '<table>';
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-		print '<br />';
-		print '<p>';
+		print '<tr>';
         foreach ($row as $item) {
-            print ($item?htmlentities($item):' ');
+            print '<td>' . ($item?htmlentities($item):' ') . '</td>';
 		}
-		print '</p>';
-    }
+		print '</tr>';
+	}
+	print '</table>';
 }
 
 function print_user_allowed_rows($conn, $table, $user_id) {
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
+	print '<table';
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-		print '<br />';
-		print '<p>';
+		print '<tr>';
         foreach ($row as $item) {
 
         	if($item == $user_id){
         		reset($row); // if item matches id, reset internal pointer
 
         		while(current($row) === TRUE){
-        			print ($item?htmlentities($item):' '); // print out items in row
+        			print '<td>' . ($item?htmlentities($item):' ') . '</td>'; // print out items in row
         			next($row);
         		}
-        	}
+			}
+		}
+		print '</tr>';
 	}
-		print '</p>';
-    }
+	print '</table>';
 }
 
 function insert_row($conn, $query) {
@@ -65,29 +67,13 @@ function insert_row($conn, $query) {
 }
 
 function assign_task_developer($conn, $table, $bug_id, $dev_id){
-	$stid = oci_parse($conn, "SELECT * FROM $table");
+	$stid = oci_parse($conn, "UPDATE Bugs SET AssignedDeveloper ='$dev_id' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
-
-	$sql = "UPDATE Bugs SET AssignedDeveloper ='$dev_id' WHERE Bugid = '$bug_id'";
-
-	if ($conn->query($sql) === TRUE) {
-	    echo "Record updated successfully";
-	} else {
-	    echo "Error updating record: ";
-	}
 }
 
 function update_status($conn, $table, $bug_id, $status){
-	$stid = oci_parse($conn, "SELECT * FROM $table");
+	$stid = oci_parse($conn, "UPDATE Bugs SET STATUS ='$status' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
-
-	$sql = "UPDATE Bugs SET STATUS ='$status' WHERE Bugid = '$bug_id'";
-
-	if ($conn->query($sql) === TRUE) {
-	    echo "Record updated successfully";
-	} else {
-	    echo "Error updating record: ";
-	}
 }
 
 

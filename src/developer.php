@@ -23,9 +23,9 @@
         </p>
     </div>
     <form action="update_status.php" method="post">
-        <input type="text" name="bugID" placeholder="Bug ID">       
+        <input type="text" name="bugID" placeholder="Bug ID">
         <br />
- 	<input type="text" name="status" placeholder="Status of current bug">
+ 	    <input type="text" name="status" placeholder="Status of current bug">
         <br />
 
         <input type="submit" value="Update">
