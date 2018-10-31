@@ -6,6 +6,17 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
+
+        if (isset($_POST['developerID'])) {
+            $bug_id = $_POST['bugID'];
+            $developer_id = $_POST['developerID'];
+
+            $conn = db_connect();
+
+            assign_task_developer($conn, 'Bugs', $bug_id, $developer_id);
+
+            db_close($conn);
+        }
     ?>
 </head>
 <body>
@@ -41,7 +52,7 @@
     <div>
     <p>Use the form below to assign a bug to a developer:</p>
 
-    <form action="assign_developer.php" method="post">
+    <form action="manager.php" method="post">
         Developer ID: <input type="text" name="developerID" required>
         Bug ID: <input type="text" name="bugID" required>
         <br />

@@ -67,12 +67,12 @@ function insert_row($conn, $query) {
 }
 
 function assign_task_developer($conn, $table, $bug_id, $dev_id){
-	$stid = oci_parse($conn, "UPDATE Bugs SET AssignedDeveloper ='$dev_id' WHERE Bugid = '$bug_id'");
+	$stid = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDDEV = '$dev_id' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
 }
 
 function update_status($conn, $table, $bug_id, $status){
-	$stid = oci_parse($conn, "UPDATE Bugs SET STATUS ='$status' WHERE Bugid = '$bug_id'");
+	$stid = oci_parse($conn, "UPDATE Bugs SET STATUS = '$status' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
 }
 

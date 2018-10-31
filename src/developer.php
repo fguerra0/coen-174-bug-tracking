@@ -6,8 +6,17 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
-	include "credentials.php";
-	$conn = db_connect();
+
+        if (isset($_POST['status'])) {
+            $bug_id = $_POST['bugID'];
+            $status = $_POST['status'];
+
+            $conn = db_connect();
+
+            update_status($conn, 'Bugs', $bug_id, $status);
+
+            db_close($conn);
+        }
     ?>
 </head>
 <body>
@@ -22,7 +31,7 @@
             ?>
         </p>
     </div>
-    <form action="update_status.php" method="post">
+    <form action="developer.php" method="post">
         <input type="text" name="bugID" placeholder="Bug ID">
         <br />
  	    <input type="text" name="status" placeholder="Status of current bug">
