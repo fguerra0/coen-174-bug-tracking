@@ -7,13 +7,14 @@
     <?php
         include 'db.php';
 
-        if (isset($_POST['developerID'])) {
+        if (isset($_POST['developerID']) && isset($_POST['testerID'])){
             $bug_id = $_POST['bugID'];
             $developer_id = $_POST['developerID'];
+			$tester_id = $_POST['testerID'];
 
             $conn = db_connect();
 
-            assign_task_developer($conn, 'Bugs', $bug_id, $developer_id);
+            assign_task($conn, 'Bugs', $bug_id, $developer_id, $tester_id);
 
             db_close($conn);
         }
@@ -53,8 +54,9 @@
     <p>Use the form below to assign a bug to a developer:</p>
 
     <form action="manager.php" method="post">
-        Developer ID: <input type="text" name="developerID" required>
         Bug ID: <input type="text" name="bugID" required>
+        Tester ID: <input type="text" name="testerID" required>
+        Developer ID: <input type="text" name="developerID" required>
         <br />
         <input type="submit" value="Assign">
     </form>
