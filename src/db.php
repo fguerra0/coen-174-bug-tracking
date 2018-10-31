@@ -51,7 +51,7 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 		print '<tr>';
         foreach ($row as $item) {
 
-        	if($item == $user_id){
+        	if ($item == $user_id){
         		reset($row); // if item matches id, reset internal pointer
 
         		while(current($row) === TRUE){
