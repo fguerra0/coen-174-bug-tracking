@@ -10,7 +10,7 @@
     $firstname = $_POST['firstName'];
     $email = $_POST['email'];
     $description = $_POST['description'];
-    $id = uniqid();
+    $id = random_int(3, 255);
 
     $conn = db_connect();
 
