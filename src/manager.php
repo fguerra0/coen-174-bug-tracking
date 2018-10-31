@@ -54,8 +54,9 @@
     <p>Use the form below to assign a bug to a developer:</p>
 
     <form action="manager.php" method="post">
-        Developer ID: <input type="text" name="developerID" required>
         Bug ID: <input type="text" name="bugID" required>
+        Tester ID: <input type="text" name="testerID" required>
+        Developer ID: <input type="text" name="developerID" required>
         <br />
         <input type="submit" value="Assign">
     </form>
