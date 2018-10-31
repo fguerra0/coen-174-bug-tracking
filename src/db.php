@@ -54,7 +54,7 @@ function print_user_allowed_rows($conn, $table, $user_id) {
         			next($row);
         		}
         	}
-		}
+	}
 		print '</p>';
     }
 }
@@ -76,5 +76,19 @@ function assign_task_developer($conn, $table, $bug_id, $dev_id){
 	    echo "Error updating record: ";
 	}
 }
+
+function update_status($conn, $table, $bug_id, $status){
+	$stid = oci_parse($conn, "SELECT * FROM $table");
+	oci_execute($stid);
+
+	$sql = "UPDATE Bugs SET STATUS ='$status' WHERE Bugid = '$bug_id'";
+
+	if ($conn->query($sql) === TRUE) {
+	    echo "Record updated successfully";
+	} else {
+	    echo "Error updating record: ";
+	}
+}
+
 
 ?>

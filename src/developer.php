@@ -6,6 +6,8 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
+	include "credentials.php";
+	$conn = db_connect();
     ?>
 </head>
 <body>
@@ -20,10 +22,10 @@
             ?>
         </p>
     </div>
-    <form action="">
-        <input type="text" name="status" placeholder="Status of current bug">
+    <form action="update_status.php" method="post">
+        <input type="text" name="bugID" placeholder="Bug ID">       
         <br />
-        <input type="text" name="details" placeholder="Any additional details or comments?">
+ 	<input type="text" name="status" placeholder="Status of current bug">
         <br />
 
         <input type="submit" value="Update">

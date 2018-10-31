@@ -45,7 +45,7 @@
         Developer ID: <input type="text" name="developerID" required>
         Bug ID: <input type="text" name="bugID" required>
         <br />
-        <input type="submit" value="Submit">
+        <input type="submit" value="Assign">
     </form>
     </div>
 </body>

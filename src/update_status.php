@@ -6,11 +6,11 @@
     include 'db.php';
 
     $bug_id = $_POST['bugID'];
-    $developer_id = $_POST['developerID'];
+    $status = $_POST['status'];
 
     $conn = db_connect();
 
-    assign_task_developer($conn, 'Bugs', $bug_id, $developer_id);
+    update_status($conn, 'Bugs', $bug_id, $status);
 
     db_close($conn);
 
