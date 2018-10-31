@@ -14,9 +14,9 @@
 
     $conn = db_connect();
 
-    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Description)
-              VALUES ($id, '$lastname', '$firstname', '$email', '$description')";
-    print $query;
+    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Description, Status)
+              VALUES ($id, '$lastname', '$firstname', '$email', '$description', 'submitted')";
+    print 'Thank you for your bug report!';
 
     insert_row($conn, $query);
 
