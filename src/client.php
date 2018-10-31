@@ -9,12 +9,6 @@
     ?>
 </head>
 <body>
-    <?php
-        $conn = db_connect();
-        print_rows($conn, 'Bugs');
-        db_close($conn);
-    ?>
-
     <h2>Welcome to the</h2>
     <h1>SCU Bug Tracker</h1>
 

@@ -6,6 +6,17 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
+
+        if (isset($_POST['status'])) {
+            $bug_id = $_POST['bugID'];
+            $status = $_POST['status'];
+
+            $conn = db_connect();
+
+            update_status($conn, 'Bugs', $bug_id, $status);
+
+            db_close($conn);
+        }
     ?>
 </head>
 <body>
@@ -20,13 +31,14 @@
             ?>
         </p>
     </div>
-    <form action="">
-        <input type="text" name="testtype" placeholder="What kind of test was completed">
+    <form action="tester.php" method="post">
+        <input type="text" name="bugID" placeholder="Bug ID">
         <br />
-        <input type="text" name="details" placeholder="Was the bug validated or fixed? Additional details?">
+ 	    <input type="text" name="status" placeholder="Status of current bug">
         <br />
 
-        <input type="submit" value="Confirm">
+        <input type="submit" value="Update">
+    </form>
     </form>
 </body>
 </html>

@@ -15,6 +15,5 @@
     db_close($conn);
 
     ?>
-    <br />
 </body>
 </html>

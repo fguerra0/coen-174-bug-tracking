@@ -28,6 +28,8 @@ function print_rows($conn, $table) {
 	oci_execute($stid);
 
 	print '<table>';
+	print_table_header($table);
+
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 		print '<tr>';
         foreach ($row as $item) {
@@ -43,6 +45,8 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 	oci_execute($stid);
 
 	print '<table';
+	print_table_header($table);
+
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 		print '<tr>';
         foreach ($row as $item) {
@@ -76,5 +80,33 @@ function update_status($conn, $table, $bug_id, $status){
 	oci_execute($stid);
 }
 
+function print_table_header($table) {
+	if ($table == 'Bugs') {
+		print '<tr>';
+		print '<th>Bug ID</th>';
+		print '<th>Last Name</th>';
+		print '<th>First Name</th>';
+		print '<th>Email</th>';
+		print '<th>Description</th>';
+		print '<th>Status</th>';
+		print '<th>Assigned Tester</th>';
+		print '<th>Assigned Developer</th>';
+		print '</tr>';
+	} else if ($table == 'Devs') {
+		print '<tr>';
+		print '<th>Dev ID</th>';
+		print '<th>Last Name</th>';
+		print '<th>First Name</th>';
+		print '</tr>';
+	} else if ($table == 'Testers') {
+		print '<tr>';
+		print '<th>Tester ID</th>';
+		print '<th>Last Name</th>';
+		print '<th>First Name</th>';
+		print '</tr>';
+	} else {
+		return "Table $table not found!";
+	}
+}
 
 ?>
