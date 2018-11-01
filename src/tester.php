@@ -52,6 +52,8 @@
                 <option>1 - This Bug</option>
                 <option>2 - Weird Interaction</option>
             </select>
+        </div>
+        <div class="form-group">
             <label for="selectStatus">Update Status</label>
             <select class="form-control" id="selectStatus" name="selectStatus">
                 <option>Submitted</option>
