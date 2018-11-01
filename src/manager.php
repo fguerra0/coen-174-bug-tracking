@@ -65,6 +65,29 @@
         <br />
         <input type="submit" value="Assign">
     </form>
-    </div>
+
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="selectBug">Select a Bug</label>
+            <select class="form-control" id="selectBug" name="selectBug">
+                <option>1 - This Bug</option>
+                <option>2 - Weird Interaction</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectTester">Assign a Tester</label>
+            <select class="form-control" id="selectTester" name="selectTester">
+                <option>1 - Bob Tester</option>
+                <option>2 - Jane Tester</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectDeveloper">Assign a Developer</label>
+            <select class="form-control" id="selectDeveloper" name="selectDeveloper">
+                <option>1 - Wendy Developer</option>
+                <option>2 - Bill Developer</option>
+            </select>
+        </div>
+    </form>
 </body>
 </html>

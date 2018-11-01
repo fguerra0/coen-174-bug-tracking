@@ -44,6 +44,23 @@
 
         <input type="submit" value="Update">
     </form>
+
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="selectBug">Select a Bug</label>
+            <select class="form-control" id="selectBug" name="selectBug">
+                <option>1 - This Bug</option>
+                <option>2 - Weird Interaction</option>
+            </select>
+            <label for="selectStatus">Update Status</label>
+            <select class="form-control" id="selectStatus" name="selectStatus">
+                <option>Submitted</option>
+                <option>Testing</option>
+                <option>Fixing</option>
+                <option>Validating</option>
+                <option>Fixed</option>
+            </select>
+        </div>
     </form>
 </body>
 </html>

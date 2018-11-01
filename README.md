@@ -8,3 +8,4 @@ Improved bug tracker for SCU IT to use on their software
 * When manager assigns bug, status changes to 'validating'
 * Notes section for the tester & developer
 * Name tables and styling (tim)
+* Ask user for a Bug Title / Topic
