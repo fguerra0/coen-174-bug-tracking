@@ -10,7 +10,7 @@
     $email = $_POST['email'];
     $description = $_POST['description'];
     $id = uniqid();
-    $dateSubmitted = TO_DATE(date("Y/M/D"), 'yyyy/mm/dd');
+    $dateSubmitted = TO_DATE('2018/11/04', 'yyyy/mm/dd');
     echo $dateSubmitted;
 
     $conn = db_connect();
