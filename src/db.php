@@ -70,9 +70,9 @@ function insert_row($conn, $query) {
 	oci_execute($stid);
 }
 
-function assign_task($conn, $table, $bug_id, $dev_id , $tester_id){
-	$stid = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDDEV = '$dev_id' WHERE Bugid = '$bug_id'");
-	$stid2 = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDTESTER = '$tester_id' WHERE Bugid = '$bug_id'");
+function assign_task($conn, $table, $bug, $dev, $tester){
+	$stid = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDDEV = '$dev' WHERE Bugid = '$bug'");
+	$stid2 = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDTESTER = '$tester' WHERE Bugid = '$bug'");
 	oci_execute($stid);
 	oci_execute($stid2);
 }

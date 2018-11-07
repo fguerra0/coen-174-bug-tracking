@@ -12,14 +12,14 @@
     <?php
         include 'db.php';
 
-        if (isset($_POST['developerID']) && isset($_POST['testerID'])){
-            $bug_id = $_POST['bugID'];
-            $developer_id = $_POST['developerID'];
-			$tester_id = $_POST['testerID'];
+        if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])){
+            $bug_selected = $_POST['selectBug'];
+            $developer_selected = $_POST['selectDeveloper'];
+			$tester_selected = $_POST['selectTester'];
 
             $conn = db_connect();
 
-            assign_task($conn, 'Bugs', $bug_id, $developer_id, $tester_id);
+            assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
 
             db_close($conn);
         }
