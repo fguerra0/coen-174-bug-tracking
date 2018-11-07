@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-    Welcome
     <?php
 
     include 'db.php';
@@ -16,14 +15,22 @@
 
     $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Description, Status)
               VALUES ($id, '$lastname', '$firstname', '$email', '$description', 'submitted')";
-    print 'Thank you for your bug report!';
 
     insert_row($conn, $query);
 
     db_close($conn);
 
     ?>
-    <br />
+
+    <div class="container col-md-8 col-md-offset-2">
+        <div class="jumbotron">
+            <h1 class="display-4">Thank you!</h1>
+            <p class="lead">We appreciate your bug report ~</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="client.php" role="button">Okay!</a>
+            </p>
+        </div>
+    </div>
 </body>
 </html>
 
