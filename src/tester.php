@@ -25,44 +25,48 @@
     ?>
 </head>
 <body>
-    <h1>Welcome, Tester!</h1>
-    <hr />
-    <div>
-        <p>
-            <?php
-                $conn = db_connect();
-                print_rows($conn, 'Bugs');
-                db_close($conn);
-            ?>
-        </p>
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Welcome, Tester!</h1>
+            <hr />
+            <div>
+                <p>
+                    <?php
+                        $conn = db_connect();
+                        print_rows($conn, 'Bugs');
+                        db_close($conn);
+                    ?>
+                </p>
+            </div>
+            <form action="tester.php" method="post">
+                <input type="text" name="bugID" placeholder="Bug ID">
+                <br />
+                <input type="text" name="status" placeholder="Status of current bug">
+                <br />
+
+                <input type="submit" value="Update">
+            </form>
+
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="selectBug">Select a Bug</label>
+                    <select class="form-control" id="selectBug" name="selectBug">
+                        <option>1 - This Bug</option>
+                        <option>2 - Weird Interaction</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="selectStatus">Update Status</label>
+                    <select class="form-control" id="selectStatus" name="selectStatus">
+                        <option>Submitted</option>
+                        <option>Testing</option>
+                        <option>Fixing</option>
+                        <option>Validating</option>
+                        <option>Fixed</option>
+                    </select>
+                </div>
+            </form>
+        </div>
     </div>
-    <form action="tester.php" method="post">
-        <input type="text" name="bugID" placeholder="Bug ID">
-        <br />
- 	    <input type="text" name="status" placeholder="Status of current bug">
-        <br />
-
-        <input type="submit" value="Update">
-    </form>
-
-    <form action="" method="post">
-        <div class="form-group">
-            <label for="selectBug">Select a Bug</label>
-            <select class="form-control" id="selectBug" name="selectBug">
-                <option>1 - This Bug</option>
-                <option>2 - Weird Interaction</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="selectStatus">Update Status</label>
-            <select class="form-control" id="selectStatus" name="selectStatus">
-                <option>Submitted</option>
-                <option>Testing</option>
-                <option>Fixing</option>
-                <option>Validating</option>
-                <option>Fixed</option>
-            </select>
-        </div>
-    </form>
 </body>
 </html>
