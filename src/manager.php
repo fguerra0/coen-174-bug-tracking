@@ -26,72 +26,70 @@
     ?>
 </head>
 <body>
-    <div class="container">
-        <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, Manager!</h1>
-            <hr />
-            <div>
-                <p>
-                    <?php
-                        $conn = db_connect();
-                        print_rows($conn, 'Bugs');
-                        db_close($conn);
-                    ?>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <?php
-                        $conn = db_connect();
-                        print_rows($conn, 'Testers');
-                        db_close($conn);
-                    ?>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <?php
-                        $conn = db_connect();
-                        print_rows($conn, 'Devs');
-                        db_close($conn);
-                    ?>
-                </p>
-            </div>
-            <div>
-            <p>Use the form below to assign a bug to a developer:</p>
-
-            <form action="manager.php" method="post">
-                Bug ID: <input type="text" name="bugID" required>
-                Tester ID: <input type="text" name="testerID" required>
-                Developer ID: <input type="text" name="developerID" required>
-                <br />
-                <input type="submit" value="Assign">
-            </form>
-
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="selectBug">Select a Bug</label>
-                    <select class="form-control" id="selectBug" name="selectBug">
-                        <option>1 - This Bug</option>
-                        <option>2 - Weird Interaction</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="selectTester">Assign a Tester</label>
-                    <select class="form-control" id="selectTester" name="selectTester">
-                        <option>1 - Bob Tester</option>
-                        <option>2 - Jane Tester</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="selectDeveloper">Assign a Developer</label>
-                    <select class="form-control" id="selectDeveloper" name="selectDeveloper">
-                        <option>1 - Wendy Developer</option>
-                        <option>2 - Bill Developer</option>
-                    </select>
-                </div>
-            </form>
+    <div class="container col-md-8 col-md-offset-2">
+        <h1>Welcome, Manager!</h1>
+        <hr />
+        <div>
+            <p>
+                <?php
+                    $conn = db_connect();
+                    print_rows($conn, 'Bugs');
+                    db_close($conn);
+                ?>
+            </p>
         </div>
+        <div>
+            <p>
+                <?php
+                    $conn = db_connect();
+                    print_rows($conn, 'Testers');
+                    db_close($conn);
+                ?>
+            </p>
+        </div>
+        <div>
+            <p>
+                <?php
+                    $conn = db_connect();
+                    print_rows($conn, 'Devs');
+                    db_close($conn);
+                ?>
+            </p>
+        </div>
+        <div>
+        <p>Use the form below to assign a bug to a developer:</p>
+
+        <form action="manager.php" method="post">
+            Bug ID: <input type="text" name="bugID" required>
+            Tester ID: <input type="text" name="testerID" required>
+            Developer ID: <input type="text" name="developerID" required>
+            <br />
+            <input type="submit" value="Assign">
+        </form>
+
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="selectBug">Select a Bug</label>
+                <select class="form-control" id="selectBug" name="selectBug">
+                    <option>1 - This Bug</option>
+                    <option>2 - Weird Interaction</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selectTester">Assign a Tester</label>
+                <select class="form-control" id="selectTester" name="selectTester">
+                    <option>1 - Bob Tester</option>
+                    <option>2 - Jane Tester</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selectDeveloper">Assign a Developer</label>
+                <select class="form-control" id="selectDeveloper" name="selectDeveloper">
+                    <option>1 - Wendy Developer</option>
+                    <option>2 - Bill Developer</option>
+                </select>
+            </div>
+        </form>
     </div>
 </body>
 </html>

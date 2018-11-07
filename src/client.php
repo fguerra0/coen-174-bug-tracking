@@ -44,8 +44,7 @@
             <div class="form-group">
                 <label for="inputDescription">Description</label>
                 <textarea class="form-control" name="description" rows="5" cols="40"
-                    id="inputDescription" placeholder="Describe what happened..." required>
-                </textarea>
+                    id="inputDescription" placeholder="Describe what happened..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
