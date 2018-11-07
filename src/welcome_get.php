@@ -9,12 +9,14 @@
     $firstname = $_POST['firstName'];
     $email = $_POST['email'];
     $description = $_POST['description'];
-    $id = rand(3, 255);
+    $id = uniqid();
+    $dateSubmitted = TO_DATE(date("Y/M/D"), 'yyyy/mm/dd');
+    echo $dateSubmitted;
 
     $conn = db_connect();
 
-    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Description, Status)
-              VALUES ($id, '$lastname', '$firstname', '$email', '$description', 'submitted')";
+    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Subject, Description, Status, DateSubmitted)
+              VALUES ('$id', '$lastname', '$firstname', '$email', '$description', 'submitted', $dateSubmitted)";
 
     insert_row($conn, $query);
 

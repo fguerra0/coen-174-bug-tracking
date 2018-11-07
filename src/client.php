@@ -42,6 +42,11 @@
                 </small>
             </div>
             <div class="form-group">
+                <label for="inputSubject">Subject</label>
+                <input type="text" name="subject" class="form-control"
+                    id="inputSubject" placeholder="Bug Subject/Title" required>
+            </div>
+            <div class="form-group">
                 <label for="inputDescription">Description</label>
                 <textarea class="form-control" name="description" rows="5" cols="40"
                     id="inputDescription" placeholder="Describe what happened..." required></textarea>
