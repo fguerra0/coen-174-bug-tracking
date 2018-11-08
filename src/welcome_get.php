@@ -11,12 +11,14 @@
     $subject = $_POST['subject'];
     $description = $_POST['description'];
     $id = uniqid();
-    $d = date('Y-m-d');
+    $today = date('Y-m-d');
 
     $conn = db_connect();
 
-    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Subject, Description, Status, DateSubmitted)
-              VALUES ('$id', '$lastname', '$firstname', '$email', '$subject', '$description', 'submitted', $d)";
+    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
+                                Subject, Description, Status, DateSubmitted)
+              VALUES ('$id', '$lastname', '$firstname', '$email',
+                      '$subject', '$description', 'submitted', TO_DATE('$today', 'yyyy-mm-dd'))";
 
     insert_row($conn, $query);
 
