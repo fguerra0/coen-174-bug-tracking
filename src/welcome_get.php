@@ -8,15 +8,17 @@
     $lastname = $_POST['lastName'];
     $firstname = $_POST['firstName'];
     $email = $_POST['email'];
+    $subject = $_POST['subject'];
     $description = $_POST['description'];
     $id = uniqid();
-    $dateSubmitted = TO_DATE('2018/11/04', 'yyyy/mm/dd');
+    $d = date('Y-m-d');
+    $dateSubmitted = CONVERT('2018/11/04', 'yyyy/mm/dd');
     echo $dateSubmitted;
 
     $conn = db_connect();
 
     $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email, Subject, Description, Status, DateSubmitted)
-              VALUES ('$id', '$lastname', '$firstname', '$email', '$description', 'submitted', $dateSubmitted)";
+              VALUES ('$id', '$lastname', '$firstname', '$email', '$subject', '$description', 'submitted', $d)";
 
     insert_row($conn, $query);
 
