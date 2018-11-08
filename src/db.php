@@ -44,7 +44,7 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
-	print '<table class="table table-striped table-bordered"';
+	print '<table class="table table-striped table-bordered">';
 	print_table_header($table);
 
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
@@ -89,10 +89,13 @@ function print_table_header($table) {
 		print '<th>Last Name</th>';
 		print '<th>First Name</th>';
 		print '<th>Email</th>';
+		print '<th>Subject</th>';
 		print '<th>Description</th>';
-		print '<th>Status</th>';
 		print '<th>Assigned Tester</th>';
 		print '<th>Assigned Developer</th>';
+		print '<th>Status</th>';
+		print '<th>Date Submitted</th>';
+		print '<th>Date Completed</th>';
 		print '</tr>';
 	} else if ($table == 'Devs') {
 		print '<tr>';
