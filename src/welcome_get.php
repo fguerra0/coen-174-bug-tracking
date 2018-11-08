@@ -13,6 +13,7 @@
     $id = uniqid();
     $today = date('Y-m-d');
 
+
     $conn = db_connect();
 
     $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
