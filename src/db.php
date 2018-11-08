@@ -114,4 +114,13 @@ function print_table_header($table) {
 	}
 }
 
+function make_options($conn, $column1, $column2, $table) {
+	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table");
+	oci_execute($stid);
+
+	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {	
+		print '<option>'.($row['BUGID']?htmlentities($row['BUGID']):' ').' - '.($row['SUBJECT']?htmlentities($row['SUBJECT']):' ').'</option>';        
+	}
+}
+
 ?>
