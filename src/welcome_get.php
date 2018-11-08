@@ -12,8 +12,6 @@
     $description = $_POST['description'];
     $id = uniqid();
     $d = date('Y-m-d');
-    $dateSubmitted = CONVERT('2018/11/04', 'yyyy/mm/dd');
-    echo $dateSubmitted;
 
     $conn = db_connect();
 
