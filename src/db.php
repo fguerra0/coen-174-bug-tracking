@@ -27,7 +27,7 @@ function print_rows($conn, $table) {
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
-	print '<table>';
+	print '<table class="table table-striped table-bordered>';
 	print_table_header($table);
 
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
