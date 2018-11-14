@@ -56,7 +56,7 @@
                 <p>
                     <?php
                         $conn = db_connect();
-                        print_rows($conn, 'Bugs');
+                        print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status = 'Fixing'");
                         db_close($conn);
                     ?>
                 </p>

@@ -23,8 +23,8 @@ function db_close($conn) {
 	oci_close($conn);
 }
 
-function print_rows($conn, $table) {
-	$stid = oci_parse($conn, "SELECT * FROM $table");
+function print_rows_query($conn, $table, $query) {
+	$stid = oci_parse($conn, $query);
 	oci_execute($stid);
 
 	print '<table class="table table-striped table-bordered">';
@@ -38,6 +38,10 @@ function print_rows($conn, $table) {
 		print '</tr>';
 	}
 	print '</table>';
+}
+
+function print_rows($conn, $table) {
+	print_rows_query($conn, $table, "SELECT * FROM $table");
 }
 
 function print_user_allowed_rows($conn, $table, $user_id) {
