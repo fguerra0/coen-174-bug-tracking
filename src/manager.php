@@ -13,14 +13,13 @@
         include 'db.php';
 
         if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])){
-            $bug_selected = $_POST['selectBug'];
-            $developer_selected = $_POST['selectDeveloper'];
-			$tester_selected = $_POST['selectTester'];
+            $bug_selected = read_until_white_space($_POST['selectBug']);
+            $developer_selected = read_until_white_space($_POST['selectDeveloper']);
+            $tester_selected = read_until_white_space($_POST['selectTester']);
 
             $conn = db_connect();
-
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
-
+            update_status($conn, 'Bugs', $bug_selected, 'Testing');
             db_close($conn);
         }
     ?>
@@ -78,7 +77,7 @@
             </div>
             <p>Use the form below to assign a bug to a developer:</p>
 
-            <form action="" method="post">
+            <form action="manager.php" method="post">
                 <div class="form-group">
                     <label for="selectBug">Select a Bug</label>
                     <select class="form-control" id="selectBug" name="selectBug">
@@ -105,7 +104,7 @@
                     <select class="form-control" id="selectDeveloper" name="selectDeveloper">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'DevId', 'LastName', 'Devs');
+                            make_options($conn, 'DevID', 'LastName', 'Devs');
                             db_close($conn);
                         ?>
                     </select>

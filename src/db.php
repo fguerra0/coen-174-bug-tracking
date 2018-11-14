@@ -70,16 +70,22 @@ function insert_row($conn, $query) {
 	oci_execute($stid);
 }
 
-function assign_task($conn, $table, $bug, $dev, $tester){
-	$stid = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDDEV = '$dev' WHERE Bugid = '$bug'");
-	$stid2 = oci_parse($conn, "UPDATE Bugs SET ASSIGNEDTESTER = '$tester' WHERE Bugid = '$bug'");
+function assign_task($conn, $table, $bug_id, $dev_id, $tester_id){
+	$stid = oci_parse($conn, "UPDATE $table SET ASSIGNEDDEV = '$dev_id' WHERE Bugid = '$bug_id'");
+	$stid2 = oci_parse($conn, "UPDATE $table SET ASSIGNEDTESTER = '$tester_id' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
 	oci_execute($stid2);
 }
 
 function update_status($conn, $table, $bug_id, $status){
-	$stid = oci_parse($conn, "UPDATE Bugs SET STATUS = '$status' WHERE Bugid = '$bug_id'");
+	$stid = oci_parse($conn, "UPDATE $table SET STATUS = '$status' WHERE Bugid = '$bug_id'");
 	oci_execute($stid);
+
+	if ($status == 'Fixed') {
+		$today = date('Y-m-d');
+		$stid = oci_parse($conn, "UPDATE $table SET DATECOMPLETED = TO_DATE('$today', 'yyyy-mm-dd') WHERE Bugid = '$bug_id'");
+		oci_execute($stid);
+	}
 }
 
 function print_table_header($table) {

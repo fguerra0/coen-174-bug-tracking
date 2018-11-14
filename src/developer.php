@@ -12,14 +12,12 @@
     <?php
         include 'db.php';
 
-        if (isset($_POST['status'])) {
-            $bug_id = $_POST['bugID'];
-            $status = $_POST['status'];
+        if (isset($_POST['selectStatus'])) {
+            $bug_id = read_until_white_space($_POST['selectBug']);
+            $status = $_POST['selectStatus'];
 
             $conn = db_connect();
-
             update_status($conn, 'Bugs', $bug_id, $status);
-
             db_close($conn);
         }
     ?>
@@ -50,46 +48,44 @@
         </div>
     </nav>
 
-    <div class="container col-md-8 col-md-offset-2">
-        <h1>Welcome, Developer!</h1>
-        <hr />
-        <div>
-            <p>
-                <?php
-                    $conn = db_connect();
-                    print_rows($conn, 'Bugs');
-                    db_close($conn);
-                ?>
-            </p>
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Welcome, Developer!</h1>
+            <hr />
+            <div>
+                <p>
+                    <?php
+                        $conn = db_connect();
+                        print_rows($conn, 'Bugs');
+                        db_close($conn);
+                    ?>
+                </p>
+            </div>
+
+            <form action="developer.php" method="post">
+                <div class="form-group">
+                    <label for="selectBug">Select a Bug</label>
+                    <select class="form-control" id="selectBug" name="selectBug">
+                        <?php
+                            $conn = db_connect();
+                            make_options($conn, 'BugID', 'Subject', 'Bugs');
+                            db_close($conn);
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="selectStatus">Update Status</label>
+                    <select class="form-control" id="selectStatus" name="selectStatus">
+                        <option>Submitted</option>
+                        <option>Testing</option>
+                        <option>Fixing</option>
+                        <option>Validating</option>
+                        <option>Fixed</option>
+                    </select>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Update">
+            </form>
         </div>
-        <form action="developer.php" method="post">
-            <input type="text" name="bugID" placeholder="Bug ID">
-            <br />
-            <input type="text" name="status" placeholder="Status of current bug">
-            <br />
-
-            <input type="submit" value="Update">
-        </form>
-
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="selectBug">Select a Bug</label>
-                <select class="form-control" id="selectBug" name="selectBug">
-                    <option>1 - This Bug</option>
-                    <option>2 - Weird Interaction</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="selectStatus">Update Status</label>
-                <select class="form-control" id="selectStatus" name="selectStatus">
-                    <option>Submitted</option>
-                    <option>Testing</option>
-                    <option>Fixing</option>
-                    <option>Validating</option>
-                    <option>Fixed</option>
-                </select>
-            </div>
-        </form>
     </div>
 
     <!-- Bootstrap JS / jQuery CDN links -->
