@@ -2,3 +2,4 @@
 .vscode
 coen10/
 src/credentials.php
+*.log

@@ -27,7 +27,7 @@ function print_rows($conn, $table) {
 	$stid = oci_parse($conn, "SELECT * FROM $table");
 	oci_execute($stid);
 
-	print '<table class="table table-striped table-bordered>';
+	print '<table class="table table-striped table-bordered">';
 	print_table_header($table);
 
     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
@@ -110,7 +110,7 @@ function print_table_header($table) {
 		print '<th>First Name</th>';
 		print '</tr>';
 	} else {
-		print "Table $table not found!";
+		return "Table $table not found!";
 	}
 }
 
@@ -119,8 +119,21 @@ function make_options($conn, $column1, $column2, $table) {
 	oci_execute($stid);
 
 	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-		print '<option>'.($row['BUGID']?htmlentities($row['BUGID']):' ').' - '.($row['SUBJECT']?htmlentities($row['SUBJECT']):' ').'</option>';
+		$val1 = $row[strtoupper($column1)];
+		$val2 = $row[strtoupper($column2)];
+		print '<option>'.($val1?htmlentities($val1):' ').' - '.($val2?htmlentities($val2):' ').'</option>';
 	}
 }
 
+function read_until_white_space($stringName){
+	$stringName = substr($stringName, 0, strpos($stringName, ' '));
+	return $stringName;
+}
+
+function isolate_string($stringName, $positionFront, $positionBack){
+	// use when calling function to initialize positionFront and positionBack
+	//this functions returns a string specified by the positions. 0 is the first character
+	$stringName = substr($stringName, $positionFront, $positionBack);
+	return $stringName;
+}
 ?>
