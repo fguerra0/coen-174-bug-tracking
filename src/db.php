@@ -110,7 +110,7 @@ function print_table_header($table) {
 		print '<th>First Name</th>';
 		print '</tr>';
 	} else {
-		return "Table $table not found!";
+		print "Table $table not found!";
 	}
 }
 
@@ -118,8 +118,8 @@ function make_options($conn, $column1, $column2, $table) {
 	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table");
 	oci_execute($stid);
 
-	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {	
-		print '<option>'.($row['BUGID']?htmlentities($row['BUGID']):' ').' - '.($row['SUBJECT']?htmlentities($row['SUBJECT']):' ').'</option>';        
+	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+		print '<option>'.($row['BUGID']?htmlentities($row['BUGID']):' ').' - '.($row['SUBJECT']?htmlentities($row['SUBJECT']):' ').'</option>';
 	}
 }
 
