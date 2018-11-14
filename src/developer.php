@@ -68,7 +68,7 @@
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'BugID', 'Subject', 'Bugs');
+                            make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status = 'Fixing'");
                             db_close($conn);
                         ?>
                     </select>

@@ -83,7 +83,7 @@
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
 							$conn = db_connect();
-							make_options($conn, 'BugID', 'Subject', 'Bugs');
+							make_options($conn, 'BugID', 'Subject', 'Bugs', '');
 							db_close($conn);
 						?>
 						<option> </option>
@@ -94,7 +94,7 @@
                     <select class="form-control" id="selectTester" name="selectTester">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'TesterID', 'LastName', 'Testers');
+                            make_options($conn, 'TesterID', 'LastName', 'Testers', '');
                             db_close($conn);
                         ?>
                     </select>
@@ -104,7 +104,7 @@
                     <select class="form-control" id="selectDeveloper" name="selectDeveloper">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'DevID', 'LastName', 'Devs');
+                            make_options($conn, 'DevID', 'LastName', 'Devs', '');
                             db_close($conn);
                         ?>
                     </select>

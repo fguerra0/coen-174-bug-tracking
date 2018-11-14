@@ -124,8 +124,8 @@ function print_table_header($table) {
 	}
 }
 
-function make_options($conn, $column1, $column2, $table) {
-	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table");
+function make_options($conn, $column1, $column2, $table, $query) {
+	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
 	oci_execute($stid);
 
 	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
