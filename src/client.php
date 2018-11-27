@@ -62,9 +62,6 @@
                 <label for="inputEmail">Email address</label>
                 <input type="email" class="form-control" name="email"
                     aria-describedby="emailHelp" id="inputEmail" placeholder="Email address" required>
-                <small id="emailHelp" class="form-text text-muted">
-                    We'll never share your email with anyone else.
-                </small>
             </div>
             <div class="form-group">
                 <label for="inputSubject">Subject</label>
@@ -78,6 +75,32 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <br />
+        <hr />
+        <br />
+        <p>Want to check the status of a submitted bug? Enter the bug ID below.</p>
+
+        <form action="client.php" method="get">
+            <div class="form-group">
+                <label for="inputBugID">Bug ID</label>
+                <input type="text" name="bugID" class="form-control"
+                    id="inputBugID" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <br />
+
+        <?php
+            if (isset($_GET['bugID'])) {
+                $bugid = $_GET['bugID'];
+
+                $conn = db_connect();
+                print_bug_report($conn, $bugid);
+                db_close($conn);
+            }
+        ?>
     </div>
 
     <!-- Bootstrap JS / jQuery CDN links -->
