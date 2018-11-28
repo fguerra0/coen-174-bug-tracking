@@ -84,7 +84,7 @@
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
 							$conn = db_connect();
-							make_options($conn, 'BugID', 'Subject', 'Bugs', '');
+							make_options($conn, 'BugID', 'Subject', 'Bugs',  "WHERE status != 'Fixed'");
 							db_close($conn);
 						?>
                     </select>
@@ -94,7 +94,7 @@
                     <select class="form-control" id="selectTester" name="selectTester">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE EmployeeType = 'Tester'");
+                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE employeetype = 'Tester'");
                             db_close($conn);
                         ?>
                     </select>
