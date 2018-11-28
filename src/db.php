@@ -175,4 +175,25 @@ function isolate_string($stringName, $positionFront, $positionBack){
 	$stringName = substr($stringName, $positionFront, $positionBack);
 	return $stringName;
 }
+
+function get_hash($conn, $query){
+	$stid = oci_parse($conn, $query);
+	oci_execute($stid);
+	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+	if($row)
+	{
+		return $row['PASSWORD'];
+	}
+}	
+
+function get_title($conn, $query){
+	$stid = oci_parse($conn, $query);
+	oci_execute($stid);
+	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+	if($row)
+	{
+		return $row['EMPLOYEETYPE'];
+	}
+}
+
 ?>

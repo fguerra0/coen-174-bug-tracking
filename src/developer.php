@@ -11,20 +11,27 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
-
+	session_start();
+	if($_SESSION['valid'])
+	{
         if (isset($_POST['selectStatus'])) {
             $bug_id = read_until_white_space($_POST['selectBug']);
-            $status = $_POST['selectStatus'];
+        	$status = $_POST['selectStatus'];
 
             $conn = db_connect();
             update_status($conn, 'Bugs', $bug_id, $status);
             db_close($conn);
         }
+	}
+	else
+	{
+		header("Location: login.php");
+	}
     ?>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.html">SCU Bug Tracker</a>
+        <a class="navbar-brand" href="../index.php">SCU Bug Tracker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
