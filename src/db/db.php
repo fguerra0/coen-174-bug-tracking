@@ -30,8 +30,7 @@ function print_table_body($stid) {
 }
 
 function print_rows_query($conn, $table, $query) {
-	$stid = oci_parse($conn, $query);
-	oci_execute($stid);
+	$stid = safe_sql_query($conn, $query, array());
 
 	print '<table class="table table-striped table-bordered">';
 	print_table_header($table);
@@ -93,10 +92,6 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 	print '</table>';
 }
 
-function insert_row($conn, $query) {
-	safe_sql_query($conn, $query, array());
-}
-
 function assign_task($conn, $table, $bug_id, $dev_id, $tester_id){
 	safe_sql_query($conn, "UPDATE $table SET assigneddev = :devid WHERE bugid = :bugid",
 			       array(':devid' => $dev_id, ':bugid' => $bug_id));
@@ -154,30 +149,14 @@ function make_options($conn, $column1, $column2, $table, $query) {
 }
 
 function read_until_white_space($stringName){
-	$stringName = substr($stringName, 0, strpos($stringName, ' '));
-	return $stringName;
-}
-
-function isolate_string($stringName, $positionFront, $positionBack){
-	// use when calling function to initialize positionFront and positionBack
-	// this functions returns a string specified by the positions. 0 is the first character
-	$stringName = substr($stringName, $positionFront, $positionBack);
-	return $stringName;
+	return substr($stringName, 0, strpos($stringName, ' '));
 }
 
 function get_field($conn, $sql, $bindings, $field) {
 	$stid = safe_sql_query($conn, $sql, $bindings);
 	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
 	if ($row)
-	{
 		return $row[$field];
-	}
-}
-
-function sql_query($conn, $query) {
-	$stid = oci_parse($conn, $query);
-	oci_execute($stid);
-	return $stid;
 }
 
 function safe_sql_query($conn, $sql, $bindings) {

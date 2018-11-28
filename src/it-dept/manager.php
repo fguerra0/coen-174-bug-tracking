@@ -41,7 +41,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="../login/logout.php">Logout</a>
                 </li>
             </ul>
         </div>
