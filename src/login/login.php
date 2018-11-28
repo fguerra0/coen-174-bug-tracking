@@ -48,11 +48,13 @@
                 $conn = db_connect();
                 $username = $_POST['username'];
                 $query = "SELECT * FROM employees WHERE email = :uname";
-                $bindings = array(':uname' => $username);
+                $bindings = array(':uname' => $username);  // bindings used for prepared sql query
                 $hash = get_field($conn, $query, $bindings, 'PASSWORD');
-                $valid = password_verify($_POST['password'], $hash);
+
+                $valid = password_verify($_POST['password'], $hash);  // Check that password matches hash
                 if ($valid) {
                     if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+                        // When a password needs to be rehashed (e.g., hash scheme changes), update the hash in db
                         $newHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
                         safe_sql_query($conn, "UPDATE employees SET password = :hashv WHERE email = :uname",
                                         array(':hashv' => $newHash, ':uname' => $username));
