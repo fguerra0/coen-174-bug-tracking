@@ -24,11 +24,13 @@
     $today = date('Y-m-d');
 
     $conn = db_connect();
-    $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
+    $sql = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
                                 Subject, Description, Status, DateSubmitted, Service)
-              VALUES ('$id', '$lastname', '$firstname', '$email',
-                      '$subject', '$description', 'submitted', TO_DATE('$today', 'yyyy-mm-dd'), '$service')";
-    insert_row($conn, $query);
+              VALUES (:id, :last, :first, :email, :sub, :desc, :stat, TO_DATE(:date, 'yyyy-mm-dd'), :svc)";
+    $bindings = array(':id' => $id, ':last' => $lastname, ':first' => $firstname, ':email' => $email,
+                      ':sub' => $subject, ':desc' => $description, ':stat' => 'submitted',
+                      ':date' => $today, ':svc' => $service);
+    safe_sql_query($conn, $sql, $bindings);
     db_close($conn);
 
     ?>

@@ -14,9 +14,8 @@
     include 'db.php';
 
 	session_start();
-	if($_SESSION['valid'])
-	{
-        if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])){
+	if ($_SESSION['valid']) {
+        if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])) {
         	$bug_selected = read_until_white_space($_POST['selectBug']);
             $developer_selected = read_until_white_space($_POST['selectDeveloper']);
             $tester_selected = read_until_white_space($_POST['selectTester']);
@@ -25,10 +24,8 @@
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
             update_status($conn, 'Bugs', $bug_selected, 'Testing');
             db_close($conn);
-	}
-	}
-	else
-	{
+	    }
+	} else {
 		header("Location: login.php");
 	}
     ?>
@@ -52,7 +49,7 @@
 
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, <?php echo $_SESSION['username']; ?>!</h1>
+            <h1>Welcome, <?php echo $_SESSION['firstname']; ?>!</h1>
             <hr />
             <br />
             <h2>Active Bug Tickets</h2>

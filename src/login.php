@@ -16,7 +16,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.php">SCU Bug Tracker</a>
+        <p class="navbar-brand">SCU Bug Tracker</p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,15 +27,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../index.php">Report A Bug</a>
                 </li>
-                <!--<li class="nav-item">
-                    <a class="nav-link" href="src/manager.php">Manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="src/tester.php">Tester</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="src/developer.php">Developer</a>
-                </li>-->
             </ul>
         </div>
     </nav>
@@ -52,25 +43,26 @@
 				if(isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password']))
 				{
 					$conn = db_connect();
-					$username = $_POST['username'];
-					$query = "SELECT Password FROM Employees WHERE Email = '$username'";
-					$hash = get_field($conn, $query, 'PASSWORD');
+                    $username = $_POST['username'];
+                    $query = "SELECT * FROM employees WHERE email = :uname";
+                    $bindings = array(':uname' => $username);
+					$hash = get_field($conn, $query, $bindings, 'PASSWORD');
 					$valid = password_verify($_POST['password'], $hash);
 					if ($valid)
 					{
 						if (password_needs_rehash($hash, PASSWORD_DEFAULT))
 						{
 							$newHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-							$stid = oci_parse($conn, "UPDATE Employees
-										  SET Password = $newHash
-										  WHERE Email = '$username'");
-							oci_execute($stid);
+                            safe_sql_query($conn, "UPDATE employees SET password = :hash WHERE email = :uname",
+                                           array(':hash' => $newHash, ':uname' => $username));
 						}
 						$_SESSION['valid'] = true;
 						$_SESSION['timeout'] = time();
                         $_SESSION['username'] = $username;
+                        $_SESSION['firstname'] = get_field($conn, $query, $bindings, 'FIRSTNAME');
+                        $_SESSION['employeeid'] = get_field($conn, $query, $bindings, 'EMPLOYEEID');
                         $base_uri = dirname($_SERVER['REQUEST_URI']);
-						$title = strtolower(get_field($conn, "SELECT EmployeeType FROM Employees WHERE Email = '$username'", 'EMPLOYEETYPE'));
+						$title = strtolower(get_field($conn, $query, $bindings, 'EMPLOYEETYPE'));
 						header("Location: http://students.engr.scu.edu" . $base_uri . "/" . $title . ".php");
 					}
 					else

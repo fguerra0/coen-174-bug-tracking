@@ -5,13 +5,9 @@ function db_connect() {
 
 	$conn = oci_connect($username, $password, $dbserver);
 
-	if ($conn)
-	{
+	if ($conn) {
 		return $conn;
-		// print '<br> connection successful';
-	}
-	else
-	{
+	} else {
 		$e = oci_error;
 		print '<br> connection failed';
 		print htmlentities($e[$message]);
@@ -48,9 +44,9 @@ function print_rows($conn, $table) {
 }
 
 function print_bug_report($conn, $bug_id) {
-	$stid = oci_parse($conn, "SELECT Bugid, Subject, Status, DateSubmitted, DateCompleted
-							  FROM Bugs WHERE Bugid = '$bug_id'");
-	oci_execute($stid);
+	$stid = safe_sql_query($conn, "SELECT bugid, subject, status, datesubmitted, datecompleted
+								   FROM bugs WHERE bugid = :bugid",
+						   array(':bugid' => $bug_id));
 	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
 
 	if ($row) {
@@ -74,8 +70,7 @@ function print_bug_report($conn, $bug_id) {
 }
 
 function print_user_allowed_rows($conn, $table, $user_id) {
-	$stid = oci_parse($conn, "SELECT * FROM $table");
-	oci_execute($stid);
+	$stid = safe_sql_query($conn, "SELECT * FROM :table", array(':table' => $table));
 
 	print '<table class="table table-striped table-bordered">';
 	print_table_header($table);
@@ -99,25 +94,24 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 }
 
 function insert_row($conn, $query) {
-	$stid = oci_parse($conn, $query);
-	oci_execute($stid);
+	safe_sql_query($conn, $query, array());
 }
 
 function assign_task($conn, $table, $bug_id, $dev_id, $tester_id){
-	$stid = oci_parse($conn, "UPDATE $table SET ASSIGNEDDEV = '$dev_id' WHERE Bugid = '$bug_id'");
-	$stid2 = oci_parse($conn, "UPDATE $table SET ASSIGNEDTESTER = '$tester_id' WHERE Bugid = '$bug_id'");
-	oci_execute($stid);
-	oci_execute($stid2);
+	safe_sql_query($conn, "UPDATE $table SET assigneddev = :devid WHERE bugid = :bugid",
+			       array(':devid' => $dev_id, ':bugid' => $bug_id));
+	safe_sql_query($conn, "UPDATE $table SET assignedtester = :testerid WHERE bugid = :bugid",
+				   array(':testerid' => $tester_id, ':bugid' => $bug_id));
 }
 
 function update_status($conn, $table, $bug_id, $status){
-	$stid = oci_parse($conn, "UPDATE $table SET STATUS = '$status' WHERE Bugid = '$bug_id'");
-	oci_execute($stid);
+	safe_sql_query($conn, "UPDATE $table SET status = :status WHERE bugid = :bugid",
+				   array(':status' => $status, ':bugid' => $bug_id));
 
 	if ($status == 'Fixed') {
 		$today = date('Y-m-d');
-		$stid = oci_parse($conn, "UPDATE $table SET DATECOMPLETED = TO_DATE('$today', 'yyyy-mm-dd') WHERE Bugid = '$bug_id'");
-		oci_execute($stid);
+		safe_sql_query($conn, "UPDATE $table SET datecompleted = TO_DATE(:today, 'yyyy-mm-dd') WHERE bugid = :bugid",
+					   array(':today' => $today, ':bugid' => $bug_id));
 	}
 }
 
@@ -150,8 +144,7 @@ function print_table_header($table) {
 }
 
 function make_options($conn, $column1, $column2, $table, $query) {
-	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
-	oci_execute($stid);
+	$stid = safe_sql_query($conn, "SELECT $column1, $column2 FROM $table $query", array());
 
 	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 		$val1 = $row[strtoupper($column1)];
@@ -167,13 +160,13 @@ function read_until_white_space($stringName){
 
 function isolate_string($stringName, $positionFront, $positionBack){
 	// use when calling function to initialize positionFront and positionBack
-	//this functions returns a string specified by the positions. 0 is the first character
+	// this functions returns a string specified by the positions. 0 is the first character
 	$stringName = substr($stringName, $positionFront, $positionBack);
 	return $stringName;
 }
 
-function get_field($conn, $query, $field) {
-	$stid = sql_query($conn, $query);
+function get_field($conn, $sql, $bindings, $field) {
+	$stid = safe_sql_query($conn, $sql, $bindings);
 	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
 	if ($row)
 	{
@@ -183,6 +176,15 @@ function get_field($conn, $query, $field) {
 
 function sql_query($conn, $query) {
 	$stid = oci_parse($conn, $query);
+	oci_execute($stid);
+	return $stid;
+}
+
+function safe_sql_query($conn, $sql, $bindings) {
+	$stid = oci_parse($conn, $sql);
+	foreach ($bindings as $key => $val) {
+		oci_bind_by_name($stid, $key, $bindings[$key]);
+	}
 	oci_execute($stid);
 	return $stid;
 }

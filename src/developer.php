@@ -11,22 +11,20 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
-	session_start();
-	if($_SESSION['valid'])
-	{
-        if (isset($_POST['selectStatus'])) {
-            $bug_id = read_until_white_space($_POST['selectBug']);
-        	$status = $_POST['selectStatus'];
+        session_start();
+        if ($_SESSION['valid']) {
+            $employeeid = $_SESSION['employeeid'];
+            if (isset($_POST['selectStatus']) && isset($_POST['selectBug'])) {
+                $bug_id = read_until_white_space($_POST['selectBug']);
+                $status = $_POST['selectStatus'];
 
-            $conn = db_connect();
-            update_status($conn, 'Bugs', $bug_id, $status);
-            db_close($conn);
+                $conn = db_connect();
+                update_status($conn, 'Bugs', $bug_id, $status);
+                db_close($conn);
+            }
+        } else {
+            header("Location: login.php");
         }
-	}
-	else
-	{
-		header("Location: login.php");
-	}
     ?>
 </head>
 <body>
@@ -48,13 +46,14 @@
 
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, <?php echo $_SESSION['username']; ?>!</h1>
+            <h1>Welcome, <?php echo $_SESSION['firstname']; ?>!</h1>
             <hr />
             <div>
                 <p>
                     <?php
                         $conn = db_connect();
-                        print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status = 'Fixing'");
+                        print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs
+                                                         WHERE Status = 'Fixing' AND AssignedDev = '$employeeid'");
                         db_close($conn);
                     ?>
                 </p>
@@ -66,7 +65,7 @@
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status = 'Fixing'");
+                            make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status = 'Fixing' AND AssignedDev = '$employeeid'");
                             db_close($conn);
                         ?>
                     </select>
