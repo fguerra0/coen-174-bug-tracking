@@ -9,7 +9,12 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'src/db.php';
+        include 'db.php';
+
+        session_start();
+        if (!$_SESSION['valid']) {
+            header("Location: login.php");
+        }
     ?>
 </head>
 <body>
@@ -23,20 +28,19 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="src/login.php">Login</a>
+                    <a class="nav-link" href="logout.php">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <div class="container col-md-8 col-md-offset-2">
-        <h2>Welcome to the</h2>
-        <h1>SCU Bug Tracker</h1>
-
+        <h1>Welcome, <?php echo $_SESSION['firstname']; ?>!</h1>
         <hr />
-        <p>Please use the form below to report a bug with SCU services.</p>
+        <br />
 
-        <form action="src/bug_report_submit.php" method="post">
+        <p>Please use the form below to create a new employee account.</p>
+        <form action="new_user.php" method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputFirstName">First Name</label>
@@ -50,36 +54,29 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputEmail">Email address</label>
+                <label for="inputEmail">Email address (username)</label>
                 <input type="email" class="form-control" name="email"
-                    aria-describedby="emailHelp" id="inputEmail" placeholder="Email address" required>
+                    id="inputEmail" placeholder="Email address" required>
             </div>
             <div class="form-group">
-                <label for="inputService">SCU Service</label>
-                <select type="text" class="form-control" name="service"
-                    id="inputService">
-                    <option>eCampus</option>
-                    <option>Camino</option>
-                    <option>SCU Main Website</option>
-                    <option>SCU G Suite (Gmail, Calendar & Drive)</option>
-                    <option>CourseAvail</option>
-                    <option>Webpages @SCU</option>
-                    <option>Handshake</option>
-                    <option>Course Evaluations</option>
-                    <option>Alumni Directory</option>
-                    <option>Library</option>
-                    <option>Other</option>
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" name="password"
+                    id="inputPassword" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <label for="inputEmployeeID">Employee ID</label>
+                <input type="text" name="employeeid" class="form-control"
+                    id="inputEmployeeID" placeholder="Employee ID" required>
+            </div>
+            <div class="form-group">
+                <label for="inputType">Employee Type</label>
+                <select type="text" class="form-control" name="etype"
+                    id="inputType">
+                    <option>Manager</option>
+                    <option>Tester</option>
+                    <option>Developer</option>
+                    <option>Admin</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="inputSubject">Subject</label>
-                <input type="text" name="subject" class="form-control"
-                    id="inputSubject" placeholder="Bug Subject/Title" required>
-            </div>
-            <div class="form-group">
-                <label for="inputDescription">Description</label>
-                <textarea class="form-control" name="description" rows="5" cols="40"
-                    id="inputDescription" placeholder="Describe what happened..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -87,32 +84,31 @@
         <br />
         <hr />
         <br />
-        <p>Want to check the status of a submitted bug? Enter the bug ID below.</p>
-
-        <form action="index.php" method="get">
-            <div class="form-group">
-                <label for="inputBugID">Bug ID</label>
-                <input type="text" name="bugID" class="form-control"
-                    id="inputBugID" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
         <br />
 
-        <?php
-            if (isset($_GET['bugID'])) {
-                $bugid = $_GET['bugID'];
-
+        <h2>All Registered Employees</h2>
+        <div>
+            <?php
                 $conn = db_connect();
-                print_bug_report($conn, $bugid);
+                print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
+                                                        FROM Employees");
                 db_close($conn);
-            }
-        ?>
+            ?>
+        </div>
 
         <br />
-        <p>The content of these web pages is not generated by and does not represent
-        the views of Santa Clara University or any of its departments or organizations.</p>
+        <br />
+        <br />
+        <br />
+
+        <h2>All Bug Tickets</h2>
+        <div>
+            <?php
+                $conn = db_connect();
+                print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs");
+                db_close($conn);
+            ?>
+        </div>
     </div>
 
     <!-- Bootstrap JS / jQuery CDN links -->

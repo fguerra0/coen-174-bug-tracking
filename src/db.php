@@ -70,7 +70,7 @@ function print_bug_report($conn, $bug_id) {
 }
 
 function print_user_allowed_rows($conn, $table, $user_id) {
-	$stid = safe_sql_query($conn, "SELECT * FROM :table", array(':table' => $table));
+	$stid = safe_sql_query($conn, "SELECT * FROM :tablev", array(':tablev' => $table));
 
 	print '<table class="table table-striped table-bordered">';
 	print_table_header($table);
