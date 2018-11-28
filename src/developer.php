@@ -40,9 +40,9 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="client.php">Client</a>
                 </li>
-                <!--<li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="manager.php">Manager</a>
                 </li>
                 <li class="nav-item">
@@ -50,7 +50,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="developer.php">Developer</a>
-                </li>-->
+                </li>
             </ul>
         </div>
     </nav>

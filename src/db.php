@@ -23,25 +23,54 @@ function db_close($conn) {
 	oci_close($conn);
 }
 
-function print_rows_query($conn, $table, $query) {
-	$stid = oci_parse($conn, $query);
-	oci_execute($stid);
-
-	print '<table class="table table-striped table-bordered">';
-	print_table_header($table);
-
-    while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+function print_table_body($stid) {
+	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 		print '<tr>';
         foreach ($row as $item) {
             print '<td>' . ($item?htmlentities($item):' ') . '</td>';
 		}
 		print '</tr>';
 	}
+}
+
+function print_rows_query($conn, $table, $query) {
+	$stid = oci_parse($conn, $query);
+	oci_execute($stid);
+
+	print '<table class="table table-striped table-bordered">';
+	print_table_header($table);
+	print_table_body($stid);
 	print '</table>';
 }
 
 function print_rows($conn, $table) {
 	print_rows_query($conn, $table, "SELECT * FROM $table");
+}
+
+function print_bug_report($conn, $bug_id) {
+	$stid = oci_parse($conn, "SELECT Bugid, Subject, Status, DateSubmitted, DateCompleted
+							  FROM Bugs WHERE Bugid = '$bug_id'");
+	oci_execute($stid);
+	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+
+	if ($row) {
+		print '<table class="table table-striped table-bordered">';
+		print '<tr>';
+		print '	 <th>Bug ID</th>';
+		print '  <th>Subject</th>';
+		print '  <th>Status</th>';
+		print '  <th>Date Submitted</th>';
+		print '  <th>Date Completed</th>';
+		print '</tr>';
+		print '<tr>';
+		foreach ($row as $item) {
+			print '  <td>' . ($item?htmlentities($item):' ') . '</td>';
+		}
+		print '</tr>';
+		print '</table>';
+	} else {
+		print "<p>The bug ID you have entered ('$bug_id') does not exist.</p>";
+	}
 }
 
 function print_user_allowed_rows($conn, $table, $user_id) {
@@ -125,11 +154,7 @@ function print_table_header($table) {
 }
 
 function make_options($conn, $column1, $column2, $table, $query) {
-	if($query == '')	
-		$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
-	else
-		$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table WHERE EMPLOYEETYPE = $query");
-		
+	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
 	oci_execute($stid);
 
 	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
@@ -170,4 +195,5 @@ function get_title($conn, $query){
 		return $row['EMPLOYEETYPE'];
 	}
 }
+
 ?>

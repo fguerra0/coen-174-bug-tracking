@@ -22,7 +22,7 @@
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
             update_status($conn, 'Bugs', $bug_selected, 'Testing');
             db_close($conn);
-        }
+	}
 	}
 	else
 	{
@@ -44,13 +44,9 @@
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
                 <!--<li class="nav-item">
-                    <a class="nav-link active" href="manager.php">Manager</a>
+                    <a class="nav-link" href="client.php">Client</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="tester.php">Tester</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="developer.php">Developer</a>
                 </li>-->
             </ul>
         </div>
@@ -104,7 +100,7 @@
                     <select class="form-control" id="selectTester" name="selectTester">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', 'Tester');
+                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE EmployeeType = 'Tester'");
                             db_close($conn);
                         ?>
                     </select>
@@ -114,7 +110,7 @@
                     <select class="form-control" id="selectDeveloper" name="selectDeveloper">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', 'Developer');
+                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE EmployeeType = 'Developer'");
                             db_close($conn);
                         ?>
                     </select>
