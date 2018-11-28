@@ -11,15 +11,22 @@
     <title>SCU Bug Tracker</title>
     <?php
         include 'db.php';
-
+	session_start();
+	if($_SESSION['valid'])
+	{
         if (isset($_POST['selectStatus'])) {
             $bug_id = read_until_white_space($_POST['selectBug']);
-            $status = $_POST['selectStatus'];
+        	$status = $_POST['selectStatus'];
 
             $conn = db_connect();
             update_status($conn, 'Bugs', $bug_id, $status);
             db_close($conn);
         }
+	}
+	else
+	{
+		header("Location: login.php");
+	}
     ?>
 </head>
 <body>
@@ -35,7 +42,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" href="manager.php">Manager</a>
                 </li>
                 <li class="nav-item">
@@ -43,7 +50,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="developer.php">Developer</a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>

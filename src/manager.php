@@ -10,23 +10,29 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'db.php';
-
+	session_start();
+	if($_SESSION['valid'])
+	{	
         if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])){
-            $bug_selected = read_until_white_space($_POST['selectBug']);
+        	$bug_selected = read_until_white_space($_POST['selectBug']);
             $developer_selected = read_until_white_space($_POST['selectDeveloper']);
             $tester_selected = read_until_white_space($_POST['selectTester']);
-
-            $conn = db_connect();
+		
+        	$conn = db_connect();
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
             update_status($conn, 'Bugs', $bug_selected, 'Testing');
             db_close($conn);
         }
+	}
+	else
+	{
+		header("Location: login.php");
+	}
     ?>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.html">SCU Bug Tracker</a>
+        <a class="navbar-brand" href="../index.php">SCU Bug Tracker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,9 +41,9 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="client.php">Client</a>
+                    <a class="nav-link" href="logout.php">Logout</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link active" href="manager.php">Manager</a>
                 </li>
                 <li class="nav-item">
@@ -45,17 +51,21 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="developer.php">Developer</a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>
 
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, Manager!</h1>
+            <h1>Welcome, 
+			<?php 
+			echo $_SESSION['username'];
+			?>!</h1>
             <hr />
             <div>
                 <?php
+					include 'db.php';
                     $conn = db_connect();
                     print_rows($conn, 'Bugs');
                     db_close($conn);
@@ -94,7 +104,7 @@
                     <select class="form-control" id="selectTester" name="selectTester">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'TesterID', 'LastName', 'Testers', '');
+                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', 'Tester');
                             db_close($conn);
                         ?>
                     </select>
@@ -104,7 +114,7 @@
                     <select class="form-control" id="selectDeveloper" name="selectDeveloper">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'DevID', 'LastName', 'Devs', '');
+                            make_options($conn, 'EmployeeID', 'LastName', 'Employees', 'Developer');
                             db_close($conn);
                         ?>
                     </select>

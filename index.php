@@ -25,7 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="src/login.php">Login</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" href="src/manager.php">Manager</a>
                 </li>
                 <li class="nav-item">
@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="src/developer.php">Developer</a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>

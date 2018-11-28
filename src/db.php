@@ -125,7 +125,11 @@ function print_table_header($table) {
 }
 
 function make_options($conn, $column1, $column2, $table, $query) {
-	$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
+	if($query == '')	
+		$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table $query");
+	else
+		$stid = oci_parse($conn, "SELECT $column1, $column2 FROM $table WHERE EMPLOYEETYPE = $query");
+		
 	oci_execute($stid);
 
 	while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
