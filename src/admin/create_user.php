@@ -12,8 +12,12 @@
 <body>
     <?php
 
-    include '../db/db.php';
+    include '../db/backend.php';
 
+    /*
+     * This ...
+     *
+     */
     session_start();
     if ($_SESSION['valid']) {
         $lastname = $_POST['lastName'];

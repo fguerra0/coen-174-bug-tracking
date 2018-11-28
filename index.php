@@ -9,7 +9,7 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'src/db/db.php';
+        include 'src/db/backend.php';
     ?>
 </head>
 <body>

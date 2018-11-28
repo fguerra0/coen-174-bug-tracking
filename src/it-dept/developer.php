@@ -10,7 +10,12 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include '../db/db.php';
+        include '../db/backend.php';
+
+        /*
+         *
+         *
+         */
         session_start();
         if ($_SESSION['valid']) {
             $employeeid = $_SESSION['employeeid'];

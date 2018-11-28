@@ -38,8 +38,12 @@
 		<div class = "container form-signin">
 
 			<?php
-            include '../db/db.php';
+            include '../db/backend.php';
 
+            /*
+             * This ...
+             *
+             */
             if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
                 $conn = db_connect();
                 $username = $_POST['username'];

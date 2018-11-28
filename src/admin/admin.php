@@ -9,8 +9,9 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include '../db/db.php';
+        include '../db/backend.php';
 
+        // If the session is not valid, redirect the user to the login page
         session_start();
         if (!$_SESSION['valid']) {
             header("Location: ../login/login.php");
@@ -89,6 +90,7 @@
         <h2>All Registered Employees</h2>
         <div>
             <?php
+                // Table of registered employees
                 $conn = db_connect();
                 print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
                                                         FROM Employees");
@@ -104,6 +106,7 @@
         <h2>All Bug Tickets</h2>
         <div>
             <?php
+                // Table of bug tickets
                 $conn = db_connect();
                 print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs");
                 db_close($conn);

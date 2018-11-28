@@ -11,8 +11,12 @@
     <title>SCU Bug Tracker</title>
     <?php
 
-    include '../db/db.php';
+    include '../db/backend.php';
 
+    /*
+     * This ...
+     *
+     */
 	session_start();
 	if ($_SESSION['valid']) {
         if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])) {

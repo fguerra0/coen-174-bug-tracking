@@ -12,8 +12,12 @@
 <body>
     <?php
 
-    include '../db/db.php';
+    include '../db/backend.php';
 
+    /*
+     * This ...
+     *
+     */
     $lastname = $_POST['lastName'];
     $firstname = $_POST['firstName'];
     $email = $_POST['email'];
