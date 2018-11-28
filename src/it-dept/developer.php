@@ -13,7 +13,7 @@
         include '../db/backend.php';
 
         /*
-         *
+         * This ...
          *
          */
         session_start();

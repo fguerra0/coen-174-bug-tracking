@@ -62,9 +62,15 @@
                     $_SESSION['username'] = $username;
                     $_SESSION['firstname'] = get_field($conn, $query, $bindings, 'FIRSTNAME');
                     $_SESSION['employeeid'] = get_field($conn, $query, $bindings, 'EMPLOYEEID');
-                    $base_uri = dirname($_SERVER['REQUEST_URI']);
+                    $base_uri = dirname($_SERVER['REQUEST_URI']);  // e.g., /~tshur/src/login
                     $title = strtolower(get_field($conn, $query, $bindings, 'EMPLOYEETYPE'));
-                    header("Location: http://students.engr.scu.edu" . $base_uri . "/../it-dept/" . $title . ".php");
+
+                    // Redirect user to the correct page depending on their role (manager, admin, tester, ...)
+                    if ($title == 'admin') {
+                        header("Location: http://students.engr.scu.edu" . $base_uri . "/../admin/" . $title . ".php");
+                    } else {
+                        header("Location: http://students.engr.scu.edu" . $base_uri . "/../it-dept/" . $title . ".php");
+                    }
                 } else {
                     echo "Wrong Username and/or password";
                 }

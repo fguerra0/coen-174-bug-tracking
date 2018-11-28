@@ -101,6 +101,7 @@
         <br />
 
         <?php
+            // Print a bug report if the user submits a bug ticket ID
             if (isset($_GET['bugID'])) {
                 $bugid = $_GET['bugID'];
 
