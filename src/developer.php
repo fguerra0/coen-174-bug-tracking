@@ -31,7 +31,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.php">SCU Bug Tracker</a>
+        <p class="navbar-brand">SCU Bug Tracker</p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,16 +40,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="client.php">Client</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manager.php">Manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="tester.php">Tester</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="developer.php">Developer</a>
+                    <a class="nav-link" href="logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +48,7 @@
 
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, Developer!</h1>
+            <h1>Welcome, <?php echo $_SESSION['username']; ?>!</h1>
             <hr />
             <div>
                 <p>
@@ -83,11 +74,7 @@
                 <div class="form-group">
                     <label for="selectStatus">Update Status</label>
                     <select class="form-control" id="selectStatus" name="selectStatus">
-                        <option>Submitted</option>
-                        <option>Testing</option>
-                        <option>Fixing</option>
                         <option>Validating</option>
-                        <option>Fixed</option>
                     </select>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Update">

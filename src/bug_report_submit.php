@@ -19,21 +19,22 @@
     $email = $_POST['email'];
     $subject = $_POST['subject'];
     $description = $_POST['description'];
+    $service = $_POST['service'];
     $id = uniqid();
     $today = date('Y-m-d');
 
     $conn = db_connect();
     $query = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
-                                Subject, Description, Status, DateSubmitted)
+                                Subject, Description, Status, DateSubmitted, Service)
               VALUES ('$id', '$lastname', '$firstname', '$email',
-                      '$subject', '$description', 'submitted', TO_DATE('$today', 'yyyy-mm-dd'))";
+                      '$subject', '$description', 'submitted', TO_DATE('$today', 'yyyy-mm-dd'), '$service')";
     insert_row($conn, $query);
     db_close($conn);
 
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.html">SCU Bug Tracker</a>
+        <p class="navbar-brand">SCU Bug Tracker</p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,16 +43,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="client.php">Client</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manager.php">Manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="tester.php">Tester</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="developer.php">Developer</a>
+                    <a class="nav-link" href="login.php">Login</a>
                 </li>
             </ul>
         </div>
@@ -62,7 +54,7 @@
             <h1 class="display-4">Thank you!</h1>
             <p class="lead">We appreciate your bug report, your bug tracking ID is: <?php $id ?></p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="client.php" role="button">Okay!</a>
+                <a class="btn btn-primary btn-lg" href="../index.php" role="button">Okay!</a>
             </p>
         </div>
     </div>

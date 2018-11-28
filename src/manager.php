@@ -10,14 +10,17 @@
 
     <title>SCU Bug Tracker</title>
     <?php
+
+    include 'db.php';
+
 	session_start();
 	if($_SESSION['valid'])
-	{	
+	{
         if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])){
         	$bug_selected = read_until_white_space($_POST['selectBug']);
             $developer_selected = read_until_white_space($_POST['selectDeveloper']);
             $tester_selected = read_until_white_space($_POST['selectTester']);
-		
+
         	$conn = db_connect();
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
             update_status($conn, 'Bugs', $bug_selected, 'Testing');
@@ -32,7 +35,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../index.php">SCU Bug Tracker</a>
+        <p class="navbar-brand">SCU Bug Tracker</p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,41 +46,36 @@
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
-                <!--<li class="nav-item">
-                    <a class="nav-link" href="client.php">Client</a>
-                </li>
-                <li class="nav-item">
-                </li>-->
             </ul>
         </div>
     </nav>
 
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Welcome, 
-			<?php 
-			echo $_SESSION['username'];
-			?>!</h1>
+            <h1>Welcome, <?php echo $_SESSION['username']; ?>!</h1>
             <hr />
+            <br />
+            <h2>Active Bug Tickets</h2>
             <div>
                 <?php
-					include 'db.php';
                     $conn = db_connect();
-                    print_rows($conn, 'Bugs');
+                    print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status != 'Fixed'");
                     db_close($conn);
                 ?>
             </div>
             <div>
                 <?php
                     $conn = db_connect();
-                    print_rows($conn, 'Testers');
+                    print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
+                                                          FROM Employees WHERE EmployeeType = 'Tester'");
                     db_close($conn);
                 ?>
             </div>
             <div>
                 <?php
                     $conn = db_connect();
-                    print_rows($conn, 'Devs');
+                    print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
+                                                          FROM Employees WHERE EmployeeType = 'Developer'");
                     db_close($conn);
                 ?>
             </div>
@@ -92,7 +90,6 @@
 							make_options($conn, 'BugID', 'Subject', 'Bugs', '');
 							db_close($conn);
 						?>
-						<option> </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -117,6 +114,20 @@
                 </div>
                 <input class="btn btn-primary" type="submit" value="Assign">
             </form>
+
+            <br />
+            <hr />
+            <br />
+            <br />
+
+            <h2>History of Completed Bug Tickets</h2>
+            <div>
+                <?php
+                    $conn = db_connect();
+                    print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status = 'Fixed'");
+                    db_close($conn);
+                ?>
+            </div>
         </div>
     </div>
 

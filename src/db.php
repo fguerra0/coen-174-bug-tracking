@@ -135,16 +135,12 @@ function print_table_header($table) {
 		print '<th>Status</th>';
 		print '<th>Date Submitted</th>';
 		print '<th>Date Completed</th>';
+		print '<th>SCU Service</th>';
 		print '</tr>';
-	} else if ($table == 'Devs') {
+	} else if ($table == 'Employees') {
 		print '<tr>';
-		print '<th>Dev ID</th>';
-		print '<th>Last Name</th>';
-		print '<th>First Name</th>';
-		print '</tr>';
-	} else if ($table == 'Testers') {
-		print '<tr>';
-		print '<th>Tester ID</th>';
+		print '<th>Employee ID</th>';
+		print '<th>Email</th>';
 		print '<th>Last Name</th>';
 		print '<th>First Name</th>';
 		print '</tr>';
@@ -176,24 +172,19 @@ function isolate_string($stringName, $positionFront, $positionBack){
 	return $stringName;
 }
 
-function get_hash($conn, $query){
-	$stid = oci_parse($conn, $query);
-	oci_execute($stid);
+function get_field($conn, $query, $field) {
+	$stid = sql_query($conn, $query);
 	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
-	if($row)
+	if ($row)
 	{
-		return $row['PASSWORD'];
+		return $row[$field];
 	}
-}	
+}
 
-function get_title($conn, $query){
+function sql_query($conn, $query) {
 	$stid = oci_parse($conn, $query);
 	oci_execute($stid);
-	$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
-	if($row)
-	{
-		return $row['EMPLOYEETYPE'];
-	}
+	return $stid;
 }
 
 ?>
