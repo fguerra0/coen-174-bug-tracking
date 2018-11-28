@@ -9,7 +9,7 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'src/db.php';
+        include 'src/db/db.php';
     ?>
 </head>
 <body>
@@ -23,7 +23,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="src/login.php">Login</a>
+                    <a class="nav-link" href="src/login/login.php">Login</a>
                 </li>
             </ul>
         </div>
@@ -36,7 +36,7 @@
         <hr />
         <p>Please use the form below to report a bug with SCU services.</p>
 
-        <form action="src/bug_report_submit.php" method="post">
+        <form action="src/client/submit_bug.php" method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputFirstName">First Name</label>

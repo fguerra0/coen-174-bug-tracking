@@ -12,28 +12,26 @@
 <body>
     <?php
 
-    include 'db.php';
+    include '../db/db.php';
 
-    session_start();
-    if ($_SESSION['valid']) {
-        $lastname = $_POST['lastName'];
-        $firstname = $_POST['firstName'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $employeeid = $_POST['employeeid'];
-        $etype = $_POST['etype'];
+    $lastname = $_POST['lastName'];
+    $firstname = $_POST['firstName'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $description = $_POST['description'];
+    $service = $_POST['service'];
+    $id = uniqid();
+    $today = date('Y-m-d');
 
-        $conn = db_connect();
-        $sql = "INSERT INTO employees (employeeid, email, lastname, firstname, password, employeetype)
-                VALUES (:id, :email, :lastv, :firstv, :pass, :etype)";
-        $bindings = array(':id' => $employeeid, ':email' => $email, ':lastv' => $lastname, ':firstv' => $firstname,
-                        ':pass' => $hash, ':etype' => $etype);
-        safe_sql_query($conn, $sql, $bindings);
-        db_close($conn);
-    } else {
-        header("Location: login.php");
-    }
+    $conn = db_connect();
+    $sql = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
+                                Subject, Description, Status, DateSubmitted, Service)
+              VALUES (:id, :lastv, :firstv, :email, :sub, :descv, :stat, TO_DATE(:datev, 'yyyy-mm-dd'), :svc)";
+    $bindings = array(':id' => $id, ':lastv' => $lastname, ':firstv' => $firstname, ':email' => $email,
+                      ':sub' => $subject, ':descv' => $description, ':stat' => 'submitted',
+                      ':datev' => $today, ':svc' => $service);
+    safe_sql_query($conn, $sql, $bindings);
+    db_close($conn);
 
     ?>
 
@@ -47,7 +45,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="../login/login.php">Login</a>
                 </li>
             </ul>
         </div>
@@ -56,9 +54,9 @@
     <div class="container col-md-8 col-md-offset-2">
         <div class="jumbotron">
             <h1 class="display-4">Thank you!</h1>
-            <p class="lead">Thank you for creating a new user! Their employee ID is: <?php print $employeeid; ?></p>
+            <p class="lead">We appreciate your bug report, your bug tracking ID is: <?php print $id; ?></p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="admin.php" role="button">Okay!</a>
+                <a class="btn btn-primary btn-lg" href="../../index.php" role="button">Okay!</a>
             </p>
         </div>
     </div>

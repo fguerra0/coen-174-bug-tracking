@@ -9,11 +9,11 @@
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'db.php';
+        include '../db/db.php';
 
         session_start();
         if (!$_SESSION['valid']) {
-            header("Location: login.php");
+            header("Location: ../login/login.php");
         }
     ?>
 </head>
@@ -28,7 +28,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="../login/logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -40,7 +40,7 @@
         <br />
 
         <p>Please use the form below to create a new employee account.</p>
-        <form action="new_user.php" method="post">
+        <form action="create_user.php" method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputFirstName">First Name</label>

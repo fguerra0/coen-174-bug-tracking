@@ -6,25 +6,25 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <title>SCU Bug Tracker</title>
     <?php
-        include 'db.php';
-        session_start();
-        if ($_SESSION['valid']) {
+        include '../db/db.php';
+		session_start();
+		if ($_SESSION['valid']) {
             $employeeid = $_SESSION['employeeid'];
-            if (isset($_POST['selectStatus']) && isset($_POST['selectBug'])) {
-                $bug_id = read_until_white_space($_POST['selectBug']);
-                $status = $_POST['selectStatus'];
+        	if (isset($_POST['selectStatus']) && isset($_POST['selectBug'])) {
+            	$bug_id = read_until_white_space($_POST['selectBug']);
+            	$status = $_POST['selectStatus'];
 
-                $conn = db_connect();
-                update_status($conn, 'Bugs', $bug_id, $status);
-                db_close($conn);
+            	$conn = db_connect();
+            	update_status($conn, 'Bugs', $bug_id, $status);
+            	db_close($conn);
             }
-        } else {
-            header("Location: login.php");
-        }
+		} else {
+			header("Location: ../login/login.php");
+		}
     ?>
 </head>
 <body>
@@ -38,7 +38,7 @@
             <ul class="navbar-nav mr-auto"> </ul>
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="../login/logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -52,20 +52,19 @@
                 <p>
                     <?php
                         $conn = db_connect();
-                        print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs
-                                                         WHERE Status = 'Fixing' AND AssignedDev = '$employeeid'");
+                        print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status IN ('Testing', 'Validating') AND AssignedTester = '$employeeid'");
                         db_close($conn);
                     ?>
                 </p>
             </div>
 
-            <form action="developer.php" method="post">
+            <form action="tester.php" method="post">
                 <div class="form-group">
                     <label for="selectBug">Select a Bug</label>
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
                             $conn = db_connect();
-                            make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status = 'Fixing' AND AssignedDev = '$employeeid'");
+                            make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status IN ('Testing', 'Validating') AND AssignedTester = '$employeeid'");
                             db_close($conn);
                         ?>
                     </select>
@@ -73,7 +72,8 @@
                 <div class="form-group">
                     <label for="selectStatus">Update Status</label>
                     <select class="form-control" id="selectStatus" name="selectStatus">
-                        <option>Validating</option>
+                        <option>Fixing</option>
+                        <option>Fixed</option>
                     </select>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Update">
