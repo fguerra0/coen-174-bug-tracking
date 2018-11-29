@@ -1,6 +1,19 @@
 <?php
 	ob_start();
 	session_start();
+
+/*
+ *  FILE: login.php
+ *  DESC: This file is concerned with handling the login
+ *  for the users: Manager, Developer, and Tester. This file
+ *  provides the layout for the main webpage when a user wants
+ *  to login. When a user enters a email and password and hits
+ *  login button, this php file will check the password and email
+ *  matches and will redirect the user to their respective site
+ *  whether they are a manager, developer, or tester. 
+ *
+ */
+
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +54,12 @@
             include '../db/backend.php';
 
             /*
-             * This ...
-             *
+             * The following if else statement takes care of the username and password validation.
+             * If the password hash matches the hash stored in the db for the email given, then this code
+             * will redirect the user to their website. If not, it will echo to the user that the username
+             * or password is wrong. 
              */
+            
             if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
                 $conn = db_connect();
                 $username = $_POST['username'];

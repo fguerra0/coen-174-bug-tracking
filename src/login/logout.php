@@ -1,9 +1,14 @@
 <?php
 
 /*
- * This ...
- *
+ *  FILE: logout.php
+ *  DESC: This file is concerned with handling the logout process for the 
+ *  Manager, Developer, and Tester. When either one of these users wants
+ *  to logout, this file will end their session, tell the user that they
+ *  have successfully logged out, and then redirect the user to the main
+ *  landing page (index.php)
  */
+
 session_start();
 session_unset();
 session_destroy();
