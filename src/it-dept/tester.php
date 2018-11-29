@@ -13,21 +13,24 @@
         include '../db/backend.php';
 
         /*
-         * This ...
+         * If the IT tester is logged in a current session, they will
+         * be taken to their own page and be able to view all bugs assigned
+		 * to them. There they can update bugs to either the 'fixing' or 'fixed'
+		 * state. Only bugs assigned to them specifically will be seen.
          *
          */
 		session_start();
-		if ($_SESSION['valid']) {
+		if ($_SESSION['valid']) { // Checks to see if tester is logged in
             $employeeid = $_SESSION['employeeid'];
         	if (isset($_POST['selectStatus']) && isset($_POST['selectBug'])) {
             	$bug_id = read_until_white_space($_POST['selectBug']);
             	$status = $_POST['selectStatus'];
 
-            	$conn = db_connect();
+            	$conn = db_connect(); // Updates bug status
             	update_status($conn, 'Bugs', $bug_id, $status);
             	db_close($conn);
             }
-		} else {
+		} else { // If the user is not logged in they are redirected to the login page
 			header("Location: ../login/login.php");
 		}
     ?>
@@ -41,7 +44,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto"> </ul>
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pill
                 <li class="nav-item">
                     <a class="nav-link" href="../login/logout.php">Logout</a>
                 </li>
@@ -56,7 +59,7 @@
             <div>
                 <p>
                     <?php
-                        $conn = db_connect();
+                        $conn = db_connect(); // Prints out bugs specific to tester
                         print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status IN ('Testing', 'Validating') AND AssignedTester = '$employeeid'");
                         db_close($conn);
                     ?>
@@ -68,7 +71,7 @@
                     <label for="selectBug">Select a Bug</label>
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
-                            $conn = db_connect();
+                            $conn = db_connect(); // Tester only allowed to choose bugs they are assigned to
                             make_options($conn, 'BugID', 'Subject', 'Bugs', "WHERE Status IN ('Testing', 'Validating') AND AssignedTester = '$employeeid'");
                             db_close($conn);
                         ?>
