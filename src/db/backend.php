@@ -34,10 +34,13 @@ function print_table_body($stid) {
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: print_rows_query($conn, $table, $query)
+ *	PARAMS:	  conn (SQL database connection): active SQL connection for the query
+ 			  table (string): name of a table in the Oracle database
+ 			  query (string): unique query that can be sent to the database for 
+ 			  		additional functionality
+ *	RETURNS:  None
+ *	DESC:     This function prints the rows from a table and the header
  *
  */
 function print_rows_query($conn, $table, $query) {
@@ -49,24 +52,13 @@ function print_rows_query($conn, $table, $query) {
 	print '</table>';
 }
 
-
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
- *
- */
-function print_rows($conn, $table) {
-	print_rows_query($conn, $table, "SELECT * FROM $table");
-}
-
-
-/*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: print_bug_report($conn, $bug_id)
+ *	PARAMS:	  conn (SQL database connection): active SQL connection for the query
+ 			  bug_id (string): unique id hash for a bug that has letters and numbers
+ *	RETURNS:  None
+ *	DESC:     This function prints the entire bug report (status, subject, date submitted etc.)
+ *			  given the bug id.
  *
  */
 function print_bug_report($conn, $bug_id) {
@@ -97,10 +89,13 @@ function print_bug_report($conn, $bug_id) {
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: print_user_allowed_rows($conn, $table, $user_id)
+ *	PARAMS:	  conn (SQL database connection): active SQL connection for the query
+ *			  table (string): name of a table in the Oracle database
+ *			  user_id(integer): unique employee id 
+ *	RETURNS:  None
+ *	DESC:     This function prints all the rows that a certain user is allowed to see 
+ * 			  (ie. only tester 3 can view bug reports that have been assigned to tester 3)
  *
  */
 function print_user_allowed_rows($conn, $table, $user_id) {
@@ -129,10 +124,15 @@ function print_user_allowed_rows($conn, $table, $user_id) {
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: assign_task($conn, $table, $bug_id, $dev_id, $tester_id)
+ *	PARAMS:	  conn (SQL database connection): active SQL connection for the query
+ *		   	  table (string): name of a table in the Oracle database
+ *			  bug_id (string): unique id hash for a bug that has letters and numbers
+ *			  dev_id (integer): unique employee id for the developer
+ * 			  tester_id(integer): unique employee id for the tester
+ *	RETURNS:  None
+ *	DESC:     This function assigns a certain bug to the given tester id and developer id and
+ *			  updates that row in the table
  *
  */
 function assign_task($conn, $table, $bug_id, $dev_id, $tester_id) {

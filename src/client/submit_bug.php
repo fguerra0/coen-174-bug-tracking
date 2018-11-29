@@ -15,17 +15,17 @@
     include '../db/backend.php';
 
     /*
-     * This ...
-     *
+     * Public user fills out bug report form and all entered information
+     * is placed in a SQL query and added to the Bugs table. 
      */
     $lastname = $_POST['lastName'];
     $firstname = $_POST['firstName'];
     $email = $_POST['email'];
     $subject = $_POST['subject'];
     $description = $_POST['description'];
-    $service = $_POST['service'];
-    $id = uniqid();
-    $today = date('Y-m-d');
+    $service = $_POST['service']; // SCU specific service
+    $id = uniqid(); // Creates random unique string of characters
+    $today = date('Y-m-d'); // Captures current date in day-month-year format
 
     $conn = db_connect();
     $sql = "INSERT INTO Bugs (Bugid, LastName, FirstName, Email,
@@ -33,8 +33,8 @@
               VALUES (:id, :lastv, :firstv, :email, :sub, :descv, :stat, TO_DATE(:datev, 'yyyy-mm-dd'), :svc)";
     $bindings = array(':id' => $id, ':lastv' => $lastname, ':firstv' => $firstname, ':email' => $email,
                       ':sub' => $subject, ':descv' => $description, ':stat' => 'submitted',
-                      ':datev' => $today, ':svc' => $service);
-    safe_sql_query($conn, $sql, $bindings);
+                      ':datev' => $today, ':svc' => $service); // Prevents basic SQL injection
+    safe_sql_query($conn, $sql, $bindings); // Performs SQL query specified above
     db_close($conn);
 
     ?>

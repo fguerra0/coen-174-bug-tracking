@@ -14,9 +14,9 @@
 
     include '../db/backend.php';
 
-    /*
-     * This ...
-     *
+    /* 
+     * Retrieves user information from form filled out by administrator
+     * and inputs all fields into employee database through a SQL query.
      */
     session_start();
     if ($_SESSION['valid']) {
@@ -24,7 +24,7 @@
         $firstname = $_POST['firstName'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $hash = password_hash($password, PASSWORD_DEFAULT); // Encrypts password by hashing
         $employeeid = $_POST['employeeid'];
         $etype = $_POST['etype'];
 
@@ -32,7 +32,7 @@
         $sql = "INSERT INTO employees (employeeid, email, lastname, firstname, password, employeetype)
                 VALUES (:id, :email, :lastv, :firstv, :pass, :etype)";
         $bindings = array(':id' => $employeeid, ':email' => $email, ':lastv' => $lastname, ':firstv' => $firstname,
-                        ':pass' => $hash, ':etype' => $etype);
+                        ':pass' => $hash, ':etype' => $etype); // Prevents basic SQL injection
         safe_sql_query($conn, $sql, $bindings);
         db_close($conn);
     } else {

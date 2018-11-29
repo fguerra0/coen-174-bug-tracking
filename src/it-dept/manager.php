@@ -14,22 +14,26 @@
     include '../db/backend.php';
 
     /*
-     * This ...
+     * If the IT manager is logged in a current session, they will
+     * be taken to their own page and be able to view all bugs currently
+     * reported to the team. There they can assign bugs to whichever
+     * tester or developer they so choose along with a history of all
+     * bug reports ever submitted, even if they have been completed.
      *
      */
 	session_start();
-	if ($_SESSION['valid']) {
+	if ($_SESSION['valid']) { // Checks to see if manager is logged in
         if (isset($_POST['selectDeveloper']) && isset($_POST['selectTester'])) {
         	$bug_selected = read_until_white_space($_POST['selectBug']);
             $developer_selected = read_until_white_space($_POST['selectDeveloper']);
             $tester_selected = read_until_white_space($_POST['selectTester']);
 
-        	$conn = db_connect();
+        	$conn = db_connect(); // Updates bug assignments
             assign_task($conn, 'Bugs', $bug_selected, $developer_selected, $tester_selected);
             update_status($conn, 'Bugs', $bug_selected, 'Testing');
             db_close($conn);
 	    }
-	} else {
+	} else { // If the user is not logged in, they are redirected to the login page
 		header("Location: ../login/login.php");
 	}
     ?>
@@ -59,14 +63,14 @@
             <h2>Active Bug Tickets</h2>
             <div>
                 <?php
-                    $conn = db_connect();
+                    $conn = db_connect(); // Non-fixed bugs displayed here
                     print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status != 'Fixed'");
                     db_close($conn);
                 ?>
             </div>
             <div>
                 <?php
-                    $conn = db_connect();
+                    $conn = db_connect(); // All testers listed here
                     print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
                                                           FROM Employees WHERE EmployeeType = 'Tester'");
                     db_close($conn);
@@ -74,7 +78,7 @@
             </div>
             <div>
                 <?php
-                    $conn = db_connect();
+                    $conn = db_connect(); // All developers listed here
                     print_rows_query($conn, 'Employees', "SELECT EmployeeID, Email, LastName, FirstName
                                                           FROM Employees WHERE EmployeeType = 'Developer'");
                     db_close($conn);
@@ -87,7 +91,7 @@
                     <label for="selectBug">Select a Bug</label>
                     <select class="form-control" id="selectBug" name="selectBug">
                         <?php
-							$conn = db_connect();
+							$conn = db_connect(); // Choose a bug that needs to be fixed
 							make_options($conn, 'BugID', 'Subject', 'Bugs',  "WHERE status != 'Fixed'");
 							db_close($conn);
 						?>
@@ -97,7 +101,7 @@
                     <label for="selectTester">Assign a Tester</label>
                     <select class="form-control" id="selectTester" name="selectTester">
                         <?php
-                            $conn = db_connect();
+                            $conn = db_connect(); // Assign a new tester
                             make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE employeetype = 'Tester'");
                             db_close($conn);
                         ?>
@@ -107,7 +111,7 @@
                     <label for="selectDeveloper">Assign a Developer</label>
                     <select class="form-control" id="selectDeveloper" name="selectDeveloper">
                         <?php
-                            $conn = db_connect();
+                            $conn = db_connect(); // Assign a new developer
                             make_options($conn, 'EmployeeID', 'LastName', 'Employees', "WHERE EmployeeType = 'Developer'");
                             db_close($conn);
                         ?>
@@ -124,7 +128,7 @@
             <h2>History of Completed Bug Tickets</h2>
             <div>
                 <?php
-                    $conn = db_connect();
+                    $conn = db_connect(); // All fixed bugs displayed here
                     print_rows_query($conn, 'Bugs', "SELECT * FROM Bugs WHERE Status = 'Fixed'");
                     db_close($conn);
                 ?>
