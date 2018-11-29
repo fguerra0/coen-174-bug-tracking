@@ -135,7 +135,7 @@ function print_user_allowed_rows($conn, $table, $user_id) {
  *	DESC:     --
  *
  */
-function assign_task($conn, $table, $bug_id, $dev_id, $tester_id){
+function assign_task($conn, $table, $bug_id, $dev_id, $tester_id) {
 	safe_sql_query($conn, "UPDATE $table SET assigneddev = :devid WHERE bugid = :bugid",
 			       array(':devid' => $dev_id, ':bugid' => $bug_id));
 	safe_sql_query($conn, "UPDATE $table SET assignedtester = :testerid WHERE bugid = :bugid",
@@ -144,13 +144,18 @@ function assign_task($conn, $table, $bug_id, $dev_id, $tester_id){
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: update_status($conn, $table, $bug_id, $status)
+ *	PARAMS:	  $conn (SQL database connection): The SQL db connection
+ *			  	  to be cleaned up and closed.
+ *			  $table (string): The name of a table in the database.
+ *			  $bug_id (string): The unique ID hash for the target bug.
+ *			  $status (string): The new status for the selected bug.
+ *	RETURNS:  None
+ *	DESC:     Update the status of a bug in the table based on the
+ *			  given $status.
  *
  */
-function update_status($conn, $table, $bug_id, $status){
+function update_status($conn, $table, $bug_id, $status) {
 	safe_sql_query($conn, "UPDATE $table SET status = :status WHERE bugid = :bugid",
 				   array(':status' => $status, ':bugid' => $bug_id));
 
@@ -163,10 +168,12 @@ function update_status($conn, $table, $bug_id, $status){
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: print_table_header($table)
+ *	PARAMS:	  $table (string): The name of a table in the database.
+ *	RETURNS:  None
+ *	DESC:     Print the header of a table based on the table name.
+ *			  If the table is invalid or does not exist, print an
+ *			  error message instead.
  *
  */
 function print_table_header($table) {
@@ -193,16 +200,24 @@ function print_table_header($table) {
 		print '<th>First Name</th>';
 		print '</tr>';
 	} else {
-		return "Table $table not found!";
+		print "Table $table not found!";
 	}
 }
 
 
 /*
- *	FUNCTION: fcn(params, a, b)
- *	PARAMS:	  var (type): desc
- *	RETURNS:  --
- *	DESC:     --
+ *	FUNCTION: make_options($conn, $column1, $column2, $table, $query)
+ *	PARAMS:	  $conn (SQL database connection): The SQL db connection
+ *			  	  to be cleaned up and closed.
+ *			  $column1 (string): Name of the first column for the option
+ *			  $column2 (string): Name of the second column for the option
+ *			  $table (string): Name of the table to access for information
+ *			  $query (string): Additional query string that specifies any
+ *			      conditional querying (e.g., WHERE status = 'Fixed')
+ *	RETURNS:  None
+ *	DESC:     Prints a list of options to be used in a <select> statement.
+ *			  The options are based on two columns in a specified $table and
+ *			  will be formatted such as "COLUMN1 - COLUMN2".
  *
  */
 function make_options($conn, $column1, $column2, $table, $query) {
